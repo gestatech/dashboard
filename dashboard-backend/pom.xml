@@ -31,6 +31,9 @@
         <main.basedir>${project.basedir}</main.basedir>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <!-- Dependencies -->
+        <version.dependency.javaee>${version.java.ee.api}</version.dependency.javaee>
     </properties>
 
     <dependencyManagement>
@@ -38,7 +41,7 @@
             <dependency>
                 <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
-                <version>${version.java.ee.api}</version>
+                <version>${version.dependency.javaee}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
