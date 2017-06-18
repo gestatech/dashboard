@@ -17,9 +17,11 @@
     </prerequisites>
 
     <properties>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
         <version.plugin.enforcer>1.4.1</version.plugin.enforcer>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <build>
