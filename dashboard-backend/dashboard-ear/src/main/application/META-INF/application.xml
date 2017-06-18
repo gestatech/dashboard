@@ -8,7 +8,7 @@
   <module>
     <web>
       <web-uri>dashboard-web-jsf.war</web-uri>
-      <context-root>/dashboard</context-root>
+      <context-root>/dashboard-jsf</context-root>
     </web>
   </module>
   <library-directory>lib</library-directory>
