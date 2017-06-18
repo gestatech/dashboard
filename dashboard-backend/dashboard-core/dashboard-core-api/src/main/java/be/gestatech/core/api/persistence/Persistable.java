@@ -18,13 +18,13 @@ public interface Persistable extends Serializable {
 
     void setId(Long id);
 
+    Date getCreated();
+
+    void setCreated(Date created);
+
+    void setUpdated(Date updated);
+
+    Date getUpdated();
+
     boolean isNew();
-
-    Date getCreateDate();
-
-    void setCreateDate(Date createDate);
-
-    void setUpdateDate(Date updateDate);
-
-    Date getUpdateDate();
 }

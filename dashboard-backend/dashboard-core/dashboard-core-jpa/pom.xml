@@ -22,6 +22,11 @@
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>be.gestatech</groupId>
+            <artifactId>dashboard-core-api</artifactId>
+            <type>jar</type>
+        </dependency>
     </dependencies>
     
     <build>

@@ -18,6 +18,10 @@
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>be.gestatech</groupId>
+            <artifactId>dashboard-infra</artifactId>
+        </dependency>
     </dependencies>
     
     <build>
