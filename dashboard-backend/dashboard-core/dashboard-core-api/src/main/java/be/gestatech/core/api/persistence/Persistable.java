@@ -25,6 +25,4 @@ public interface Persistable extends Serializable {
     void setUpdated(Date updated);
 
     Date getUpdated();
-
-    boolean isNew();
 }
