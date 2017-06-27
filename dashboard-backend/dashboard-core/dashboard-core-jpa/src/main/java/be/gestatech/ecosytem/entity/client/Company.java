@@ -97,12 +97,129 @@ public class Company implements Persistable, Serializable, Comparable<Company> {
         return updated;
     }
 
+    @Override
     public int compareTo(Company o) {
-        if(Objects.isNull(this.getName())) {
-            return -1;
-        }
-        return this.getName().compareToIgnoreCase(o.getName());
+        return 0;
     }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
+    public List<Document> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Document> documents) {
+        this.documents = documents;
+    }
+
+    public List<ClientNote> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(List<ClientNote> notes) {
+        this.notes = notes;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getPostalBox() {
+        return postalBox;
+    }
+
+    public void setPostalBox(String postalBox) {
+        this.postalBox = postalBox;
+    }
+
+    //    public int compareTo(Company o) {
+//        if(Objects.isNull(this.getName())) {
+//            return -1;
+//        }
+//        return this.getName().compareToIgnoreCase(o.getName());
+//    }
 
     @Override
     public boolean equals(Object o) {

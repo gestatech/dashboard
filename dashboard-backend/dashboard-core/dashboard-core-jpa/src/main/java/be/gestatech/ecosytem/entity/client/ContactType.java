@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by amuri on 6/25/2017.
@@ -22,5 +23,38 @@ public class ContactType implements Persistable, Serializable, Comparable<Contac
 
     public static final String CONTACT_TYPE_ENTITY = "ContactType";
 
+    @Override
+    public Long getId() {
+        return null;
+    }
 
+    @Override
+    public void setId(Long id) {
+
+    }
+
+    @Override
+    public Date getCreated() {
+        return null;
+    }
+
+    @Override
+    public void setCreated(Date created) {
+
+    }
+
+    @Override
+    public void setUpdated(Date updated) {
+
+    }
+
+    @Override
+    public Date getUpdated() {
+        return null;
+    }
+
+    @Override
+    public int compareTo(ContactType o) {
+        return 0;
+    }
 }
