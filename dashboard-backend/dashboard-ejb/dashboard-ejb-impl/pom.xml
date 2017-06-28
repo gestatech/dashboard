@@ -27,6 +27,11 @@
             <groupId>be.gestatech</groupId>
             <artifactId>dashboard-ejb-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>be.gestatech</groupId>
+            <artifactId>dashboard-infra</artifactId>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

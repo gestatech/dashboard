@@ -5,7 +5,7 @@
  */
 package be.gestatech.core.api.interceptor;
 
-import be.gestatech.infra.util.ClassUtil;
+import be.gestatech.dashboard.infra.util.ClassUtil;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

@@ -1,6 +1,6 @@
 package be.gestatech.core.api.persistence;
 
-import be.gestatech.infra.util.StringUtils;
+import be.gestatech.dashboard.infra.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
