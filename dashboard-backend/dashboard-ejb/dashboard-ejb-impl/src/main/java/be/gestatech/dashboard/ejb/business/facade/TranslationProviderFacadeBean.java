@@ -6,12 +6,10 @@ import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
 import javax.ejb.Local;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import be.gestatech.dashboard.ejb.business.service.TranslationProviderService;
 import be.gestatech.dashboard.ejb.business.vo.Translation;
-import be.gestatech.dashboard.infra.cash.Cachable;
+import be.gestatech.dashboard.infra.cache.Cachable;
 
 /**
  * Created by amurifa on 28/06/2017.
