@@ -21,7 +21,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
-        <maven.build.timestamp>${maven.build.timestamp}</maven.build.timestamp>
         <version.maven>3.2.5</version.maven>
 
         <!-- D E P E N D E N C I E S -->
