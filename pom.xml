@@ -26,16 +26,13 @@
         <!-- D E P E N D E N C I E S -->
         <version.junitVersion>4.12</version.junitVersion>
         <version.hamcrest>1.3</version.hamcrest>
-        <version.slf4jVersion>1.7.21</version.slf4jVersion>
         <version.mockito>1.10.19</version.mockito>
-        <version.logbackVersion>1.1.3</version.logbackVersion>
 
         <!-- P L U G I N  S -->
-        <version.maven.gpg.plugin>1.6</version.maven.gpg.plugin>
-        <version.plugin.enforcer>1.4.1</version.plugin.enforcer>
         <version.maven.source.plugin>2.2.1</version.maven.source.plugin>
         <version.maven.release.plugin>2.5.3</version.maven.release.plugin>
         <version.maven.javadoc.plugin>2.10.4</version.maven.javadoc.plugin>
+        <version.maven.enforcer.plugin>1.4.1</version.maven.enforcer.plugin>
     </properties>
 
     <prerequisites>
@@ -64,16 +61,6 @@
                 <artifactId>hamcrest-library</artifactId>
                 <version>${version.hamcrest}</version>
             </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${version.slf4jVersion}</version>
-            </dependency>
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${version.logbackVersion}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -83,7 +70,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>${version.plugin.enforcer}</version>
+                    <version>${version.maven.enforcer.plugin}</version>
                     <executions>
                         <execution>
                             <id>enforce-maven</id>
@@ -188,20 +175,6 @@
                                 <id>attach-javadocs</id>
                                 <goals>
                                     <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${version.maven.gpg.plugin}</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
                                 </goals>
                             </execution>
                         </executions>

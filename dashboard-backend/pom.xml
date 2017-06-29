@@ -145,6 +145,7 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.6.1</version>
                     <configuration>
+                        <verbose>true</verbose>
                         <fork>true</fork>
                         <optimize>true</optimize>
                         <source>${maven.compiler.source}</source>
@@ -154,6 +155,7 @@
                         <showWarnings>true</showWarnings>
                         <showDeprecation>true</showDeprecation>
                         <encoding>${project.build.sourceEncoding}</encoding>
+                        <compilerVersion>${maven.compiler.source}</compilerVersion>
                         <compilerArgument>-Xlint:all,-options,-path</compilerArgument>
                         <compilerArguments>
                             <endorseddirs>${endorsed.dir}</endorseddirs>
