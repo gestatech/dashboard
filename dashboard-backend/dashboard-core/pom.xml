@@ -15,7 +15,6 @@
 
     <modules>
         <module>dashboard-core-api</module>
-        <module>dashboard-core-jdbc</module>
         <module>dashboard-core-jpa</module>
     </modules>
 
