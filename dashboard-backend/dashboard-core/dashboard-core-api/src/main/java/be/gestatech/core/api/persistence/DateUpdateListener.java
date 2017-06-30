@@ -8,6 +8,7 @@ import java.util.Date;
  * Created by amuri on 6/18/2017.
  */
 public class DateUpdateListener {
+
     @PrePersist
     public void onPrePersist(Persistable entity){
         Date now = new Date();

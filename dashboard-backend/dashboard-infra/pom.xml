@@ -13,6 +13,13 @@
     <packaging>jar</packaging>
     <name>dashboard-infra</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>

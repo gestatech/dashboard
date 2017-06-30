@@ -22,6 +22,14 @@
             <groupId>be.gestatech</groupId>
             <artifactId>dashboard-core-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
     </dependencies>
     
     <build>
