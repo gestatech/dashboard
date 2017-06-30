@@ -16,13 +16,4 @@ hs_err_pid*
 .idea
 .DS_store
 .hg/
-
-/dashboard-backend/dashboard-ejb/dashboard-ejb-api/target/
-/dashboard-backend/dashboard-ejb/dashboard-ejb-impl/target/
-/dashboard-backend/dashboard-web/dashboard-web-jsf/target/
-/dashboard-backend/dashboard-ear/target/
-/dashboard-backend/dashboard-infra/target/
-/dashboard-backend/dashboard-core/dashboard-core-api/target/
-/dashboard-backend/dashboard-core/dashboard-core-jpa/target/
-/dashboard-backend/dashboard-web/dashboard-web-rest/target/
-/dashboard-backend/dashboard-core/dashboard-core-jdbc/target/
+/*/*/*/target/
