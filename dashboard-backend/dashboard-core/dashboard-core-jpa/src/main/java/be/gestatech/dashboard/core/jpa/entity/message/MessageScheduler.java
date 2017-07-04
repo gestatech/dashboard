@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import be.gestatech.dashboard.core.jpa.entity.Identifiable;
+import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.delivery.DeliveryGroup;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 import org.joda.time.DateTime;
@@ -23,7 +23,7 @@ import be.gestatech.dashboard.resources.Message;
 @Entity
 @Table(name = "MessageScheduler")
 @XmlRootElement
-public class MessageScheduler implements Serializable, Identifiable<Integer> {
+public class MessageScheduler extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 4717944326319985645L;
 
@@ -84,7 +84,7 @@ public class MessageScheduler implements Serializable, Identifiable<Integer> {
 	@ManyToOne(optional = false)
 	private Users userCreated;
 
-	public enum DayOfWeek implements Identifiable<Integer> {
+	public enum DayOfWeek implements BaseEntity<Integer> {
 		MONDAY(Message.getMessage("CALENDAR_MONDAY")), TUESDAY(Message.getMessage("CALENDAR_TUESDAY")), WEDNESDAY(Message.getMessage("CALENDAR_WEDNESDAY")), THURSDAY(Message.getMessage("CALENDAR_THURSDAY")), FRIDAY(Message.getMessage("CALENDAR_FRIDAY")), SATURDAY(Message.getMessage("CALENDAR_SATURDAY")), SUNDAY(Message.getMessage("CALENDAR_SUNDAY"));
 
 		DayOfWeek(String localName) {

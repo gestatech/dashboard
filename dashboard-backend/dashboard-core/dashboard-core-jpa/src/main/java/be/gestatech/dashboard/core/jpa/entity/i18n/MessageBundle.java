@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import be.gestatech.core.api.persistence.DateUpdateListener;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
-import be.gestatech.dashboard.core.jpa.entity.Identifiable;
+import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 
 /**
  * Entity class Describes message in particular locale and type
@@ -20,7 +20,7 @@ import be.gestatech.dashboard.core.jpa.entity.Identifiable;
 @Table(name = "MESSAGE_BUNDLE")
 @XmlRootElement
 @EntityListeners(DateUpdateListener.class)
-public class MessageBundle implements Serializable, Identifiable<Integer>, Comparable<MessageBundle> {
+public class MessageBundle extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 6574392255017080137L;
 

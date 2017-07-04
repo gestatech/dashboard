@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.Identifiable;
+import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -31,7 +31,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 	@NamedQuery(name = "MethodTypes.findByDeleted", query = "SELECT m FROM MethodTypes m WHERE m.deleted = :deleted")
 })
 @EntityListeners(DateUpdateListener.class)
-public class MethodTypes implements Serializable, Identifiable<Integer> {
+public class MethodTypes extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 3383111202158692806L;
 

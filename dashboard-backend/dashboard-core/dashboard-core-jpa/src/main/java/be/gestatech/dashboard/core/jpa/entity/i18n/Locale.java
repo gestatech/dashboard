@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.Identifiable;
+import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -20,7 +20,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @Table(name = "LOCALE")
 @XmlRootElement
 @EntityListeners(DateUpdateListener.class)
-public class Locale implements Serializable, Identifiable<Integer> {
+public class Locale extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = -3413937225651498117L;
 

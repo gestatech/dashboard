@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.Identifiable;
+import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.delivery.DeliveryGroup;
 import be.gestatech.dashboard.core.jpa.entity.policy.Policy;
 
@@ -24,7 +24,7 @@ import be.gestatech.dashboard.core.jpa.entity.policy.Policy;
 @Table(name = "USER_GROUP")
 @XmlRootElement
 @EntityListeners(DateUpdateListener.class)
-public class UserGroups implements Serializable, Identifiable<Integer> {
+public class UserGroups extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = -318814857920680370L;
 

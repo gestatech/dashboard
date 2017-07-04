@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.Identifiable;
+import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 import be.gestatech.dashboard.core.jpa.entity.schedule.Schedule;
 
@@ -30,7 +30,7 @@ import be.gestatech.dashboard.core.jpa.entity.schedule.Schedule;
 	@NamedQuery(name = "Payments.findByDeleted", query = "SELECT p FROM Payments p WHERE p.deleted = :deleted")
 })
 @EntityListeners(DateUpdateListener.class)
-public class Payments implements Serializable,Identifiable<Integer> {
+public class Payments extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = -8285370076079148502L;
 

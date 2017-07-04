@@ -25,7 +25,7 @@ import be.gestatech.core.api.persistence.DateUpdateListener;
 import be.gestatech.dashboard.infra.util.IOUtils;
 import be.gestatech.dashboard.infra.util.Utils;
 import be.gestatech.dashboard.core.jpa.entity.address.Address;
-import be.gestatech.dashboard.core.jpa.entity.Identifiable;
+import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.delivery.DeliveryGroup;
 import be.gestatech.dashboard.core.jpa.entity.i18n.Locale;
 import be.gestatech.dashboard.core.jpa.entity.method.Methods;
@@ -39,7 +39,7 @@ import be.gestatech.dashboard.core.jpa.entity.share.Share;
 @Table(name = "USER")
 @XmlRootElement
 @EntityListeners(DateUpdateListener.class)
-public class Users implements Serializable,Identifiable<Integer> {
+public class Users extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = -7010030343967468892L;
 
@@ -89,15 +89,7 @@ public class Users implements Serializable,Identifiable<Integer> {
 	@Size(max = 150)
 	@Column(name = "Description")
 	private String description;
-	@Basic(optional = false)
-	@NotNull
-	@Column(name = "DateCreated")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateCreated;
-	@Basic(optional = false)
-	@NotNull
-	@Column(name = "Deleted")
-	private boolean deleted;
+
 	@Lob
 	@Column(name = "AvatarImage")
 	private byte[] avatarImage;
@@ -109,10 +101,6 @@ public class Users implements Serializable,Identifiable<Integer> {
 	@ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinColumn(name = "Address")
 	private Address address;
-
-	@ManyToOne
-	@JoinColumn (name = "UserCreated")
-	private Users userCreated;
 
 	@ManyToOne
 	@JoinColumn (name = "Locale")

@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.Identifiable;
+import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.method.Methods;
 import be.gestatech.dashboard.core.jpa.entity.payment.Payments;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
@@ -25,7 +25,7 @@ import be.gestatech.dashboard.core.jpa.entity.room.Rooms;
 @Table(name = "SCHEDULE")
 @XmlRootElement
 @EntityListeners(DateUpdateListener.class)
-public class Schedule implements Serializable,Identifiable<Integer> {
+public class Schedule extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 5182241502702844158L;
 

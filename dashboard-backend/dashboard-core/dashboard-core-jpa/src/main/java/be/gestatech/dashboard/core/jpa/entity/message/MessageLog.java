@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.Identifiable;
+import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -21,7 +21,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @Table(name = "MESSAGE_LOG")
 @XmlRootElement
 @EntityListeners(DateUpdateListener.class)
-public class MessageLog implements Serializable, Identifiable<Integer> {
+public class MessageLog extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 6292643524288361718L;
 

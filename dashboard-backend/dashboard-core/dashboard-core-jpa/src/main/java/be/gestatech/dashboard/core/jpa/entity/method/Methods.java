@@ -12,8 +12,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import be.gestatech.core.api.persistence.DateUpdateListener;
+import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
-import be.gestatech.dashboard.core.jpa.entity.Identifiable;
 import be.gestatech.dashboard.core.jpa.entity.price.Prices;
 
 /**
@@ -35,7 +35,7 @@ import be.gestatech.dashboard.core.jpa.entity.price.Prices;
 	@NamedQuery(name = "Methods.findByDeleted", query = "SELECT m FROM Methods m WHERE m.deleted = :deleted")
 })
 @EntityListeners(DateUpdateListener.class)
-public class Methods implements Serializable,Identifiable<Integer> {
+public class Methods extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = -1551959979458824639L;
 

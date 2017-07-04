@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.Identifiable;
+import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.method.Methods;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
@@ -29,7 +29,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 	@NamedQuery(name = "Prices.findByDeleted", query = "SELECT p FROM Prices p WHERE p.deleted = :deleted")
 })
 @EntityListeners(DateUpdateListener.class)
-public class Prices implements Serializable,Identifiable<Integer> {
+public class Prices extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 5457462759625938435L;
 
