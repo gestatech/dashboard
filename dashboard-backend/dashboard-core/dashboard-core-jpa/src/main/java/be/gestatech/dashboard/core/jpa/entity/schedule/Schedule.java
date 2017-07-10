@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
+import be.gestatech.core.api.persistence.AuditEntityListener;
+import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.method.Methods;
 import be.gestatech.dashboard.core.jpa.entity.payment.Payments;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
@@ -24,7 +24,7 @@ import be.gestatech.dashboard.core.jpa.entity.room.Rooms;
 @Entity
 @Table(name = "SCHEDULE")
 @XmlRootElement
-@EntityListeners(DateUpdateListener.class)
+@EntityListeners(AuditEntityListener.class)
 public class Schedule extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 5182241502702844158L;

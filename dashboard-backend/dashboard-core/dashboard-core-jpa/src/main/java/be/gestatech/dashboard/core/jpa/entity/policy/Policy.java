@@ -11,8 +11,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
+import be.gestatech.core.api.persistence.AuditEntityListener;
+import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.UserGroups;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
@@ -23,7 +23,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @Entity
 @Table(name = "POLICY")
 @XmlRootElement
-@EntityListeners(DateUpdateListener.class)
+@EntityListeners(AuditEntityListener.class)
 public class Policy extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = -5320164799443804945L;

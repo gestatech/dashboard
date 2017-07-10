@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
+import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.delivery.DeliveryGroup;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 import org.joda.time.DateTime;

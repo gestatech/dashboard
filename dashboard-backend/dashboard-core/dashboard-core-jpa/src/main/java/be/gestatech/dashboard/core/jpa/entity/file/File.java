@@ -9,8 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
+import be.gestatech.core.api.persistence.AuditEntityListener;
+import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -19,7 +19,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @Entity
 @Table(name = "FILE")
 @XmlRootElement
-@EntityListeners(DateUpdateListener.class)
+@EntityListeners(AuditEntityListener.class)
 public class File extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 1928870383056751178L;

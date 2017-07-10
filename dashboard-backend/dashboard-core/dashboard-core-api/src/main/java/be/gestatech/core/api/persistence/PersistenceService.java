@@ -16,7 +16,7 @@ public interface PersistenceService extends Serializable {
 
     <T> T find(Class<T> clazz, Object id);
 
-    <T extends Persistable> T createOrEdit(T entity);
+    <T extends Auditable> T createOrEdit(T entity);
 
     <T> List<T> executeQuery(QueryBuilder query);
 

@@ -2,15 +2,19 @@ package be.gestatech.dashboard.core.jpa.entity.address;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Objects;
 
-import javax.persistence.*;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -18,51 +22,33 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "ADDRESS")
+@Table(name = Address.TABLE_NAME)
 @XmlRootElement
-@EntityListeners(DateUpdateListener.class)
-public class Address extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "id", column = @Column(name = "addressId"))
+public class Address extends AbstractPersistable<Integer> implements Serializable {
 
 	private static final long serialVersionUID = -7396925612281759646L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "AddressId")
+	public static final String TABLE_NAME = "ADDRESS";
+
 	private Integer addressId;
-	@Column(name = "Country")
+
 	private String country;
-	@Column(name = "Region")
+
 	private String region;
-	@Column(name = "City")
+
 	private String city;
-	@Column(name = "Address")
-	private String address;
-	@Column(name = "PostIndex")
-	private Integer postIndex;
+
+	private String street;
+
+	private Integer postalCode;
+
 	@Basic(optional = false)
-	@Column(name = "DateCreated")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateCreated;
-	@Basic(optional = false)
-	@Column(name = "Deleted")
-	private boolean deleted;
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
-	@ManyToOne(optional = false,fetch= FetchType.LAZY)
-	private Users userCreated;
-	@OneToMany(mappedBy = "address",fetch= FetchType.LAZY)
+	@XmlTransient
+	@OneToMany(mappedBy = TABLE_NAME, fetch = FetchType.LAZY)
 	private Collection<Users> usersCollection;
 
 	public Address() {
-	}
-
-	public Address(Integer addressId) {
-		this.addressId = addressId;
-	}
-
-	public Address(Integer addressId, Date dateCreated, boolean deleted) {
-		this.addressId = addressId;
-		this.dateCreated = dateCreated;
-		this.deleted = deleted;
 	}
 
 	public Integer getAddressId() {
@@ -97,62 +83,28 @@ public class Address extends BaseEntity<Integer> implements Serializable {
 		this.city = city;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getStreet() {
+		return street;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setStreet(String street) {
+		this.street = street;
 	}
 
-	public Integer getPostIndex() {
-		return postIndex;
+	public Integer getPostalCode() {
+		return postalCode;
 	}
 
-	public void setPostIndex(Integer postIndex) {
-		this.postIndex = postIndex;
+	public void setPostalCode(Integer postalCode) {
+		this.postalCode = postalCode;
 	}
 
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public boolean getDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	public Users getUserCreated() {
-		return userCreated;
-	}
-
-	public void setUserCreated(Users userCreated) {
-		this.userCreated = userCreated;
-	}
-
-	@XmlTransient
 	public Collection<Users> getUsersCollection() {
 		return usersCollection;
 	}
 
 	public void setUsersCollection(Collection<Users> usersCollection) {
 		this.usersCollection = usersCollection;
-	}
-	@Override
-	public Integer getId() {
-		return getAddressId();
-	}
-
-	@Override
-	public void setId(Integer id) {
-		setAddressId(id);
 	}
 
 	@Override
@@ -163,13 +115,16 @@ public class Address extends BaseEntity<Integer> implements Serializable {
 		if (!(o instanceof Address)) {
 			return false;
 		}
-		Address address1 = (Address) o;
-		return getDeleted() == address1.getDeleted() && Objects.equals(getAddressId(), address1.getAddressId()) && Objects.equals(getCountry(), address1.getCountry()) && Objects.equals(getRegion(), address1.getRegion()) && Objects.equals(getCity(), address1.getCity()) && Objects.equals(getAddress(), address1.getAddress()) && Objects.equals(getPostIndex(), address1.getPostIndex()) && Objects.equals(getDateCreated(), address1.getDateCreated()) && Objects.equals(getUserCreated(), address1.getUserCreated()) && Objects.equals(getUsersCollection(), address1.getUsersCollection());
+		if (!super.equals(o)) {
+			return false;
+		}
+		Address address = (Address) o;
+		return Objects.equals(getAddressId(), address.getAddressId()) && Objects.equals(getCountry(), address.getCountry()) && Objects.equals(getRegion(), address.getRegion()) && Objects.equals(getCity(), address.getCity()) && Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getPostalCode(), address.getPostalCode()) && Objects.equals(getUsersCollection(), address.getUsersCollection());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getAddressId(), getCountry(), getRegion(), getCity(), getAddress(), getPostIndex(), getDateCreated(), getDeleted(), getUserCreated(), getUsersCollection());
+		return Objects.hash(super.hashCode(), getAddressId(), getCountry(), getRegion(), getCity(), getStreet(), getPostalCode(), getUsersCollection());
 	}
 
 	@Override
@@ -179,11 +134,8 @@ public class Address extends BaseEntity<Integer> implements Serializable {
 		sb.append(", country='").append(country).append('\'');
 		sb.append(", region='").append(region).append('\'');
 		sb.append(", city='").append(city).append('\'');
-		sb.append(", address='").append(address).append('\'');
-		sb.append(", postIndex=").append(postIndex);
-		sb.append(", dateCreated=").append(dateCreated);
-		sb.append(", deleted=").append(deleted);
-		sb.append(", userCreated=").append(userCreated);
+		sb.append(", street='").append(street).append('\'');
+		sb.append(", postalCode=").append(postalCode);
 		sb.append(", usersCollection=").append(usersCollection);
 		sb.append('}');
 		return sb.toString();

@@ -11,8 +11,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
+import be.gestatech.core.api.persistence.AuditEntityListener;
+import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -30,7 +30,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 	@NamedQuery(name = "MethodTypes.findByDateCreated", query = "SELECT m FROM MethodTypes m WHERE m.dateCreated = :dateCreated"),
 	@NamedQuery(name = "MethodTypes.findByDeleted", query = "SELECT m FROM MethodTypes m WHERE m.deleted = :deleted")
 })
-@EntityListeners(DateUpdateListener.class)
+@EntityListeners(AuditEntityListener.class)
 public class MethodTypes extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 3383111202158692806L;

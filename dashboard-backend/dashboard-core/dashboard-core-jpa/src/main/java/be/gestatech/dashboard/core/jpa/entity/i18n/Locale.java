@@ -8,8 +8,8 @@ import java.util.Objects;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
+import be.gestatech.core.api.persistence.AuditEntityListener;
+import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -19,7 +19,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @Entity
 @Table(name = "LOCALE")
 @XmlRootElement
-@EntityListeners(DateUpdateListener.class)
+@EntityListeners(AuditEntityListener.class)
 public class Locale extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = -3413937225651498117L;

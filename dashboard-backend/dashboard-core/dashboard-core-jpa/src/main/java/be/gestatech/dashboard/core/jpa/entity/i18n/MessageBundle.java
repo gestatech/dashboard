@@ -8,9 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import be.gestatech.core.api.persistence.DateUpdateListener;
+import be.gestatech.core.api.persistence.AuditEntityListener;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
-import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
+import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 
 /**
  * Entity class Describes message in particular locale and type
@@ -19,7 +19,7 @@ import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
 @Entity
 @Table(name = "MESSAGE_BUNDLE")
 @XmlRootElement
-@EntityListeners(DateUpdateListener.class)
+@EntityListeners(AuditEntityListener.class)
 public class MessageBundle extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 6574392255017080137L;

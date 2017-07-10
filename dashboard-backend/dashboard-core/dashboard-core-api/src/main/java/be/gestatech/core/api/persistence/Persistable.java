@@ -1,28 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package be.gestatech.core.api.persistence;
 
-import java.io.Serializable;
-import java.util.Date;
-
 /**
+ * Created by amurifa on 7/07/2017.
  *
- * @author gestatech
+ * @param <ID> the type of the identifier
  */
-public interface Persistable extends Serializable {
+public interface Persistable<ID> {
 
-    Long getId();
+	/**
+	 * Returns the id of the entity.
+	 *
+	 * @return the id
+	 */
+	ID getId();
 
-    void setId(Long id);
-
-    Date getCreated();
-
-    void setCreated(Date created);
-
-    void setUpdated(Date updated);
-
-    Date getUpdated();
+	/**
+	 * Returns if the {@code Persistable} is new or was persisted already.
+	 *
+	 * @return if the object is new
+	 */
+	boolean isNew();
 }

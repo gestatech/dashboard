@@ -5,13 +5,13 @@
  */
 package be.gestatech.core.api.audit.model;
 
-import be.gestatech.core.api.persistence.Persistable;
+import be.gestatech.core.api.persistence.Auditable;
 
 /**
  *
  * @author gestatech
  */
-public interface AuditEntityItem extends Persistable {
+public interface AuditEntityItem extends Auditable {
      
     AuditEntity getAuditEntity();
 

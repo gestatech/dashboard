@@ -11,8 +11,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import be.gestatech.core.api.persistence.DateUpdateListener;
-import be.gestatech.dashboard.core.jpa.entity.BaseEntity;
+import be.gestatech.core.api.persistence.AuditEntityListener;
+import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.plan.Plan;
 import be.gestatech.dashboard.core.jpa.entity.schedule.Schedule;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
@@ -32,7 +32,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 	@NamedQuery(name = "Rooms.findByDateCreated", query = "SELECT r FROM Rooms r WHERE r.dateCreated = :dateCreated"),
 	@NamedQuery(name = "Rooms.findByDeleted", query = "SELECT r FROM Rooms r WHERE r.deleted = :deleted")
 })
-@EntityListeners(DateUpdateListener.class)
+@EntityListeners(AuditEntityListener.class)
 public class Rooms extends BaseEntity<Integer> implements Serializable {
 
 	private static final long serialVersionUID = -8052922608988382788L;

@@ -6,7 +6,7 @@
 package be.gestatech.core.api.audit.model;
 
 import be.gestatech.core.api.bookmark.Bookmarkable;
-import be.gestatech.core.api.persistence.Persistable;
+import be.gestatech.core.api.persistence.Auditable;
 import java.util.List;
 
 /**
@@ -14,7 +14,7 @@ import java.util.List;
  * @author gestatech
  */
 
-public interface AuditEntity extends Persistable, Bookmarkable {
+public interface AuditEntity extends Auditable, Bookmarkable {
 
     <T extends AuditEntityItem> List<T> getAuditEntityItems();
 
