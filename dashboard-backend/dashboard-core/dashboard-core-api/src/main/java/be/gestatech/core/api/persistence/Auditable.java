@@ -26,7 +26,7 @@ public interface Auditable<E ,ID, T extends TemporalAccessor> extends Persistabl
 
 	Optional<T> getCreatedDate();
 
-	void setCreatedDate(T creationDate);
+	void setCreatedOn(T creationDate);
 
 	Optional<E> getLastModifiedBy();
 

@@ -30,14 +30,14 @@ import be.gestatech.dashboard.core.jpa.entity.schedule.Schedule;
 	@NamedQuery(name = "Payments.findByDeleted", query = "SELECT p FROM Payments p WHERE p.deleted = :deleted")
 })
 @EntityListeners(AuditEntityListener.class)
-public class Payments extends BaseEntity<Integer> implements Serializable {
+public class Payments extends BaseEntity<Long> implements Serializable {
 
 	private static final long serialVersionUID = -8285370076079148502L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "PaymentId")
-	private Integer paymentId;
+	private Long paymentId;
 	@Basic(optional = false)
 	@NotNull
 	@Column(name = "DateTime")

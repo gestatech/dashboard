@@ -15,7 +15,7 @@ public class AuditEntityListener {
     @PrePersist
     public void onPrePersist(Auditable auditable){
         LocalDateTime now = LocalDateTime.ofInstant((new Date()).toInstant(), ZoneOffset.systemDefault());
-        auditable.setCreatedDate(now);
+        auditable.setCreatedOn(now);
         auditable.setCreatedBy(auditable.getCreatedBy());
     }
 

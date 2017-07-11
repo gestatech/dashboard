@@ -1,7 +1,9 @@
 package be.gestatech.dashboard.core.jpa.entity.address;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.AttributeOverride;
@@ -24,38 +26,44 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @Entity
 @Table(name = Address.TABLE_NAME)
 @XmlRootElement
-@AttributeOverride(name = "id", column = @Column(name = "addressId"))
-public class Address extends AbstractPersistable<Integer> implements Serializable {
+@AttributeOverride(name = "id", column = @Column(name = "ADDRESS_ID"))
+public class Address extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = -7396925612281759646L;
 
 	public static final String TABLE_NAME = "ADDRESS";
 
-	private Integer addressId;
+	@Column(name = "ADDRESS")
+	private Long addressId;
 
+	@Column(name = "COUNTRY")
 	private String country;
 
+	@Column(name = "REGION")
 	private String region;
 
+	@Column(name = "CITY")
 	private String city;
 
+	@Column(name = "STREET")
 	private String street;
 
+	@Column(name = "POSTAL_CODE")
 	private Integer postalCode;
 
 	@Basic(optional = false)
 	@XmlTransient
-	@OneToMany(mappedBy = TABLE_NAME, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "ADDRESS", fetch = FetchType.LAZY)
 	private Collection<Users> usersCollection;
 
 	public Address() {
 	}
 
-	public Integer getAddressId() {
+	public Long getAddressId() {
 		return addressId;
 	}
 
-	public void setAddressId(Integer addressId) {
+	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	}
 
@@ -119,25 +127,11 @@ public class Address extends AbstractPersistable<Integer> implements Serializabl
 			return false;
 		}
 		Address address = (Address) o;
-		return Objects.equals(getAddressId(), address.getAddressId()) && Objects.equals(getCountry(), address.getCountry()) && Objects.equals(getRegion(), address.getRegion()) && Objects.equals(getCity(), address.getCity()) && Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getPostalCode(), address.getPostalCode()) && Objects.equals(getUsersCollection(), address.getUsersCollection());
+		return Objects.equals(addressId, address.addressId) && Objects.equals(country, address.country) && Objects.equals(region, address.region) && Objects.equals(city, address.city) && Objects.equals(street, address.street) && Objects.equals(postalCode, address.postalCode) && Objects.equals(usersCollection, address.usersCollection);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.hashCode(), getAddressId(), getCountry(), getRegion(), getCity(), getStreet(), getPostalCode(), getUsersCollection());
-	}
-
-	@Override
-	public String toString() {
-		final StringBuilder sb = new StringBuilder("Address{");
-		sb.append("addressId=").append(addressId);
-		sb.append(", country='").append(country).append('\'');
-		sb.append(", region='").append(region).append('\'');
-		sb.append(", city='").append(city).append('\'');
-		sb.append(", street='").append(street).append('\'');
-		sb.append(", postalCode=").append(postalCode);
-		sb.append(", usersCollection=").append(usersCollection);
-		sb.append('}');
-		return sb.toString();
+		return Objects.hash(super.hashCode(), addressId, country, region, city, street, postalCode, usersCollection);
 	}
 }

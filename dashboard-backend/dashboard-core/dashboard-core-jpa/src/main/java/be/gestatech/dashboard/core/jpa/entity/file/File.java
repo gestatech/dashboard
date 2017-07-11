@@ -1,6 +1,7 @@
 package be.gestatech.dashboard.core.jpa.entity.file;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
 import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
@@ -20,40 +22,42 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @Table(name = "FILE")
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
-public class File extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "id", column = @Column(name = "FILE_ID"))
+public class File extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1928870383056751178L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "FileRepositoryId")
+	@Column(name = "FILE_ID")
 	private Integer fileId;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "FileName")
+	@Column(name = "FILE_NAME")
 	private String fileName;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Extension")
+	@Column(name = "EXTENSION")
 	@Enumerated(EnumType.ORDINAL)
 	private Extension extension;
 
 	@Lob
 	@NotNull
-	@Column(name = "File", length=1000000)
+	@Column(name = "FILE", length=1000000)
 	private byte[] file;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Size")
+	@Column(name = "SIZE")
 	private Long size;
 
 	@Basic(optional = false)
-	@Column(name = "DateCreated")
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateCreated;
+	private LocalDateTime dateCreated;
+
 	@Basic(optional = false)
 	@Column(name = "Deleted")
 	private boolean deleted;
