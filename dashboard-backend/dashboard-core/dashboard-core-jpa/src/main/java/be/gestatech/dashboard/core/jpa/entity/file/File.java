@@ -23,8 +23,6 @@ public class File extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1928870383056751178L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "FILE_ID")
 	private Integer fileId;
 
