@@ -13,14 +13,14 @@ import javax.persistence.PreUpdate;
 public class AuditEntityListener {
 
     @PrePersist
-    public void onPrePersist(Auditable auditable){
+    public void onPrePersist(AbstractAuditable auditable){
         LocalDateTime now = LocalDateTime.ofInstant((new Date()).toInstant(), ZoneOffset.systemDefault());
-        auditable.setCreatedOn(now);
+        auditable.setCreatedDate(now);
         auditable.setCreatedBy(auditable.getCreatedBy());
     }
 
     @PreUpdate
-    public void onPreUpdate(Auditable auditable){
+    public void onPreUpdate(AbstractAuditable auditable){
         LocalDateTime now = LocalDateTime.ofInstant((new Date()).toInstant(), ZoneOffset.systemDefault());
         auditable.setLastModifiedDate(now);
         auditable.setLastModifiedBy(auditable.getLastModifiedBy());

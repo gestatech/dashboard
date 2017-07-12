@@ -10,7 +10,7 @@
     <url>https://github.com/gestatech/dashboard</url>
 
     <prerequisites>
-        <maven>3.3.9</maven>
+        <maven>${version.maven}</maven>
     </prerequisites>
 
     <modules>
@@ -20,6 +20,7 @@
 
     <properties>
         <!-- P R O J E C T -->
+        <version.maven>3.3.9</version.maven>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,10 +42,6 @@
         <version.maven.javadoc.plugin>2.10.4</version.maven.javadoc.plugin>
         <version.maven.enforcer.plugin>1.4.1</version.maven.enforcer.plugin>
     </properties>
-
-    <prerequisites>
-        <maven>${version.maven}</maven>
-    </prerequisites>
 
     <dependencyManagement>
         <dependencies>
@@ -236,7 +233,7 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <plugin>
+                    <!--plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>${version.maven.gpg.plugin}</version>
@@ -249,7 +246,7 @@
                                 </goals>
                             </execution>
                         </executions>
-                    </plugin>
+                    </plugin-->
                 </plugins>
             </build>
         </profile>

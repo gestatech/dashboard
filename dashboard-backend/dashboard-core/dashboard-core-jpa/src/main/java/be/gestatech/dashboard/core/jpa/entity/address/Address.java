@@ -1,9 +1,7 @@
 package be.gestatech.dashboard.core.jpa.entity.address;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.AttributeOverride;
@@ -17,6 +15,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import be.gestatech.core.api.persistence.AbstractPersistable;
+import be.gestatech.core.api.persistence.Auditable;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**

@@ -30,6 +30,10 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
         </dependency>
+        <dependency>
+            <groupId>be.gestatech</groupId>
+            <artifactId>dashboard-utils</artifactId>
+        </dependency>
     </dependencies>
     
     <build>

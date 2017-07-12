@@ -15,7 +15,7 @@
 
     <modules>
         <module>dashboard-ear</module>
-        <module>dashboard-infra</module>
+        <module>dashboard-infrastructure</module>
         <module>dashboard-core</module>
         <module>dashboard-ejb</module>
         <module>dashboard-web</module>
@@ -46,13 +46,37 @@
             </dependency>
             <dependency>
                 <groupId>be.gestatech</groupId>
-                <artifactId>dashboard-infra</artifactId>
+                <artifactId>dashboard-audit</artifactId>
                 <version>${project.version}</version>
                 <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>be.gestatech</groupId>
-                <artifactId>dashboard-infra</artifactId>
+                <artifactId>dashboard-audit</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+            </dependency>
+            <dependency>
+                <groupId>be.gestatech</groupId>
+                <artifactId>dashboard-utils</artifactId>
+                <version>${project.version}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>be.gestatech</groupId>
+                <artifactId>dashboard-utils</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+            </dependency>
+            <dependency>
+                <groupId>be.gestatech</groupId>
+                <artifactId>dashboard-cache</artifactId>
+                <version>${project.version}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>be.gestatech</groupId>
+                <artifactId>dashboard-cache</artifactId>
                 <version>${project.version}</version>
                 <type>test-jar</type>
             </dependency>

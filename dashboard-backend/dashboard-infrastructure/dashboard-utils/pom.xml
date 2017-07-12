@@ -3,27 +3,23 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>be.gestatech</groupId>
-        <artifactId>dashboard-core</artifactId>
+        <artifactId>dashboard-infrastructure</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <groupId>be.gestatech</groupId>
-    <artifactId>dashboard-core-api</artifactId>
+    <artifactId>dashboard-utils</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>dashboard-core-api</name>
+    <name>dashboard-utils</name>
 
     <dependencies>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>be.gestatech</groupId>
-            <artifactId>dashboard-utils</artifactId>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
         </dependency>
     </dependencies>
-    
+
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
