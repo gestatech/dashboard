@@ -1,29 +1,15 @@
 package be.gestatech.dashboard.core.jpa.entity.user;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Objects;
 
-import javax.faces.context.FacesContext;
 import javax.persistence.*;
-import javax.servlet.ServletContext;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 
 import be.gestatech.core.api.persistence.AuditEntityListener;
-import be.gestatech.dashboard.infra.util.IOUtils;
-import be.gestatech.dashboard.infra.util.Utils;
 import be.gestatech.dashboard.core.jpa.entity.address.Address;
 import be.gestatech.dashboard.core.jpa.entity.delivery.DeliveryGroup;
 import be.gestatech.dashboard.core.jpa.entity.i18n.Locale;

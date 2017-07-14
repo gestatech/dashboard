@@ -1,4 +1,4 @@
-package be.gestatech.dashboard.infra.util;
+package be.gestatech.dashboard.infra.audit;
 
 import java.util.Calendar;
 import java.util.Date;

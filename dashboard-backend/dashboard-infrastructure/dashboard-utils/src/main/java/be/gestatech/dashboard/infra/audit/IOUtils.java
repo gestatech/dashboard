@@ -1,4 +1,4 @@
-package be.gestatech.dashboard.infra.util;
+package be.gestatech.dashboard.infra.audit;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

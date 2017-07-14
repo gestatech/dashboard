@@ -1,4 +1,4 @@
-package be.gestatech.dashboard.infra.util;
+package be.gestatech.dashboard.infra.audit;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;

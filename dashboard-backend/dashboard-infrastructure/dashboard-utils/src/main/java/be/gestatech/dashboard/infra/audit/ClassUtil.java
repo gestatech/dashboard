@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package be.gestatech.dashboard.infra.util;
+package be.gestatech.dashboard.infra.audit;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
