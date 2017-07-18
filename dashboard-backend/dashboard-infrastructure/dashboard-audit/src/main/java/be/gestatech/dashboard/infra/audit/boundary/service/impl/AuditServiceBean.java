@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
@@ -30,17 +31,20 @@ public class AuditServiceBean implements AuditService {
 	@Inject
 	AuditableUser auditUser;
 
-	@Inject
+	@EJB
 	AuditController auditController;
 
+	@Override
 	public List<AuditEvent> getEvents(String entity) {
 		return AuditEvent.getAllEvents(entityManager, entity);
 	}
 
+	@Override
 	public List<AuditEvent> getEvents(String entity, Long entityId) {
 		return AuditEvent.getAllEventsForId(entityManager, entity, entityId);
 	}
 
+	@Override
 	public void createAuditEvent(AuditInitialValues entity, AuditAction action) {
 
 		LocalDateTime createdAt = LocalDateTime.now(ZoneId.of(AuditConfig.LOCAL_DATE_TIME_ZONE));
