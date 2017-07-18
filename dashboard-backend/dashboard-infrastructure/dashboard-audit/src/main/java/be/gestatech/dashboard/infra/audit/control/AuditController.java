@@ -1,6 +1,7 @@
 package be.gestatech.dashboard.infra.audit.control;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -26,6 +27,11 @@ import be.gestatech.dashboard.infra.audit.entity.AuditEvent;
 import be.gestatech.dashboard.infra.audit.entity.AuditInitialValues;
 import be.gestatech.dashboard.infra.audit.entity.api.AuditManagedReadable;
 import be.gestatech.dashboard.infra.audit.entity.api.AuditReadable;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditDeleteMarker;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditEntityManager;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditGroupEvents;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditGroupEventsBreak;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditRelatedEntity;
 import be.gestatech.dashboard.infra.audit.infra.config.AuditConfig;
 import be.gestatech.dashboard.infra.audit.infra.constant.AuditAction;
 import be.gestatech.dashboard.infra.audit.infra.dto.impl.UserDTO;
@@ -38,7 +44,7 @@ import be.gestatech.dashboard.infra.audit.infra.util.AuditUtil;
 @Stateless
 public class AuditController {
 
-	private static Logger log = Logger.getLogger(AuditController.class.getName());
+	private static Logger LOGGER = Logger.getLogger(AuditController.class.getName());
 
 	@Inject
 	@AuditEntityManager
@@ -116,7 +122,7 @@ public class AuditController {
 					}
 				}
 			}
-			log.debug("Audit event written: {}", auditEvent.getId());
+			LOGGER.info(() -> String.format("Audit event written: {%s}", auditEvent.getId()));
 		}
 	}
 
@@ -131,7 +137,7 @@ public class AuditController {
 				oldValues = AuditUtil.getValues(entity.getClass().getConstructor().newInstance());
 			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
 					| SecurityException e) {
-				log.error("Could not instantiate {}", entity.getClass().getName(), e);
+				LOGGER.severe(() -> String.format("Could not instantiate {%s} {%s}", entity.getClass().getName(), e));
 			}
 		} else {
 			oldValues = entity.getInitialValues();
@@ -230,8 +236,7 @@ public class AuditController {
 			}
 			// reset time on event
 			latestEvent.setCreatedAt(LocalDateTime.now(ZoneId.of(AuditConfig.LOCAL_DATE_TIME_ZONE)));
-
-			log.debug("Audit changes grouped with event: {}", latestEvent.getId());
+			LOGGER.info(() -> String.format("Audit changes grouped with event: {%s}", latestEvent.getId()));
 			return true;
 		}
 		return false;
@@ -260,7 +265,7 @@ public class AuditController {
 						Object relatedEntity = entityManager.find(relatedEntityClass, value);
 						return toAuditableString(relatedEntity);
 					} catch (NoResultException e) {
-						log.warn("Related Entity not found: {} ID {}", relatedEntityClass, value);
+						LOGGER.warning(() -> String.format("Related Entity not found: {%s} ID {%s}", relatedEntityClass, value));
 					}
 				}
 				break;

@@ -21,6 +21,14 @@ import javax.persistence.Transient;
 
 import be.gestatech.dashboard.infra.audit.entity.AuditInitialValues;
 import be.gestatech.dashboard.infra.audit.entity.api.AuditReadable;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditBooleanLabels;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditCollectionParent;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditDateTimePattern;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditDeleteMarker;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditGroupEvents;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditIgnoreField;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditIgnoreFields;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditName;
 import be.gestatech.dashboard.infra.audit.infra.constant.AuditAction;
 
 /**

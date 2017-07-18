@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import be.gestatech.dashboard.infra.audit.control.AuditController;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditEntityManager;
 import be.gestatech.dashboard.infra.audit.infra.dto.api.AuditableUser;
 import be.gestatech.dashboard.infra.audit.infra.dto.impl.UserDTO;
 import be.gestatech.dashboard.infra.audit.entity.AuditEvent;
@@ -20,7 +21,7 @@ import be.gestatech.dashboard.infra.audit.boundary.service.api.AuditService;
 /**
  * Created by amurifa on 13/07/2017.
  */
-public class AuditServiceImpl  implements AuditService {
+public class AuditServiceBean implements AuditService {
 
 	@Inject
 	@AuditEntityManager

@@ -7,6 +7,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
 import be.gestatech.dashboard.infra.audit.entity.AuditInitialValues;
+import be.gestatech.dashboard.infra.audit.entity.listener.AuditEntityListener;
 
 /**
  * Created by amurifa on 13/07/2017.
