@@ -1,21 +1,15 @@
 package be.gestatech.dashboard.core.jpa.entity.address;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import be.gestatech.core.api.persistence.AbstractPersistable;
-import be.gestatech.core.api.persistence.Auditable;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -25,7 +19,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @Entity
 @Table(name = Address.TABLE_NAME)
 @XmlRootElement
-@AttributeOverride(name = "id", column = @Column(name = "ADDRESS_ID"))
+@AttributeOverride(name = "ID", column = @Column(name = "ADDRESS_ID"))
 public class Address extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = -7396925612281759646L;
@@ -54,6 +48,19 @@ public class Address extends AbstractPersistable<Long> implements Serializable {
 	@XmlTransient
 	@OneToMany(mappedBy = "ADDRESS", fetch = FetchType.LAZY)
 	private Collection<Users> usersCollection;
+
+	@Basic(optional = false)
+	@Column(name = "CREATED_ON")
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime dateCreated;
+
+	@Basic(optional = false)
+	@Column(name = "DELETED")
+	private boolean deleted;
+
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	private Users userCreated;
 
 	public Address() {
 	}
@@ -114,6 +121,30 @@ public class Address extends AbstractPersistable<Long> implements Serializable {
 		this.usersCollection = usersCollection;
 	}
 
+	public LocalDateTime getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(LocalDateTime dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public Users getUserCreated() {
+		return userCreated;
+	}
+
+	public void setUserCreated(Users userCreated) {
+		this.userCreated = userCreated;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -126,11 +157,28 @@ public class Address extends AbstractPersistable<Long> implements Serializable {
 			return false;
 		}
 		Address address = (Address) o;
-		return Objects.equals(addressId, address.addressId) && Objects.equals(country, address.country) && Objects.equals(region, address.region) && Objects.equals(city, address.city) && Objects.equals(street, address.street) && Objects.equals(postalCode, address.postalCode) && Objects.equals(usersCollection, address.usersCollection);
+		return isDeleted() == address.isDeleted() && Objects.equals(getAddressId(), address.getAddressId()) && Objects.equals(getCountry(), address.getCountry()) && Objects.equals(getRegion(), address.getRegion()) && Objects.equals(getCity(), address.getCity()) && Objects.equals(getStreet(), address.getStreet()) && Objects.equals(getPostalCode(), address.getPostalCode()) && Objects.equals(getUsersCollection(), address.getUsersCollection()) && Objects.equals(getDateCreated(), address.getDateCreated()) && Objects.equals(getUserCreated(), address.getUserCreated());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.hashCode(), addressId, country, region, city, street, postalCode, usersCollection);
+		return Objects.hash(super.hashCode(), getAddressId(), getCountry(), getRegion(), getCity(), getStreet(), getPostalCode(), getUsersCollection(), getDateCreated(), isDeleted(), getUserCreated());
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("Address{");
+		sb.append("addressId=").append(addressId);
+		sb.append(", country='").append(country).append('\'');
+		sb.append(", region='").append(region).append('\'');
+		sb.append(", city='").append(city).append('\'');
+		sb.append(", street='").append(street).append('\'');
+		sb.append(", postalCode=").append(postalCode);
+		sb.append(", usersCollection=").append(usersCollection);
+		sb.append(", dateCreated=").append(dateCreated);
+		sb.append(", deleted=").append(deleted);
+		sb.append(", userCreated=").append(userCreated);
+		sb.append('}');
+		return sb.toString();
 	}
 }

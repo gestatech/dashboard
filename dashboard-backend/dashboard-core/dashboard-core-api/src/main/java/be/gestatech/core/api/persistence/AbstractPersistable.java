@@ -33,10 +33,10 @@ public abstract class AbstractPersistable<PK extends Serializable> implements Pe
 	//@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = GENERATOR)
 	@Basic(optional = false)
-	@Column(name = "id", nullable = false, columnDefinition = "BIGINT UNSIGNED")
+	@Column(name = "ID", nullable = false, columnDefinition = "BIGINT UNSIGNED")
 	private PK id;
 
-	@Column(name = "version")
+	@Column(name = "VERSION")
 	@Version
 	private Long version;
 

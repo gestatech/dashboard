@@ -1,15 +1,15 @@
 package be.gestatech.dashboard.core.jpa.entity.i18n;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -17,41 +17,58 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "LOCALE")
+@Table(name = Locale.TABLE_NAME)
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
-public class Locale extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "ID", column = @Column(name = "LOCAL_ID"))
+public class Locale extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = -3413937225651498117L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "LocaleId")
+	public static final String TABLE_NAME = "LOCALE";
+
+	@Column(name = "LOCAL_ID")
 	private Integer localeId;
-	@Column(name = "LanguageCode")
+
+	@Column(name = "LANGUAGE_CODE")
 	private String languageCode;
-	@Column(name = "CountryCode")
+
+	@Column(name = "COUNTRY_CODE")
 	private String countryCode;
-	@Column(name = "Language")
+
+	@Column(name = "LANGUAGE")
 	private String language;
-	@Column(name = "LanguageNative")
+
+	@Column(name = "LANGUAGE_NATIVE")
 	private String languageNative;
-	@Basic(optional = false)
-	@Column(name = "DateCreated")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateCreated;
-	@Basic(optional = false)
-	@Column(name = "Deleted")
-	private boolean deleted;
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
-	@ManyToOne(optional = false,fetch= FetchType.LAZY)
-	private Users userCreated;
-	@OneToMany(mappedBy = "locale")
+
+	@OneToMany(mappedBy = "LOCALE")
 	private Collection<MessageBundle> messages;
-	@OneToMany(mappedBy = "locale")
+	@OneToMany(mappedBy = "LOCALE")
 	private Collection<Users> users;
 
+	@Basic(optional = false)
+	@Column(name = "CREATED_ON")
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime dateCreated;
+
+	@Basic(optional = false)
+	@Column(name = "DELETED")
+	private boolean deleted;
+
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	private Users userCreated;
+
 	public Locale() {
+	}
+
+	public Integer getLocaleId() {
+		return localeId;
+	}
+
+	public void setLocaleId(Integer localeId) {
+		this.localeId = localeId;
 	}
 
 	public String getLanguageCode() {
@@ -86,12 +103,12 @@ public class Locale extends BaseEntity<Integer> implements Serializable {
 		this.languageNative = languageNative;
 	}
 
-	public Integer getLocaleId() {
-		return localeId;
+	public Collection<MessageBundle> getMessages() {
+		return messages;
 	}
 
-	public void setLocaleId(Integer localeId) {
-		this.localeId = localeId;
+	public void setMessages(Collection<MessageBundle> messages) {
+		this.messages = messages;
 	}
 
 	public Collection<Users> getUsers() {
@@ -102,13 +119,11 @@ public class Locale extends BaseEntity<Integer> implements Serializable {
 		this.users = users;
 	}
 
-	@Override
-	public Date getDateCreated() {
+	public LocalDateTime getDateCreated() {
 		return dateCreated;
 	}
 
-	@Override
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(LocalDateTime dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
@@ -116,34 +131,16 @@ public class Locale extends BaseEntity<Integer> implements Serializable {
 		return deleted;
 	}
 
-	@Override
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 
-	@Override
 	public Users getUserCreated() {
 		return userCreated;
 	}
 
-	@Override
 	public void setUserCreated(Users userCreated) {
 		this.userCreated = userCreated;
-	}
-
-	@Override
-	public Integer getId() {
-		return getLocaleId();
-	}
-
-	@Override
-	public void setId(Integer id) {
-		setLocaleId(id);
-	}
-
-	@Override
-	public boolean getDeleted() {
-		return deleted;
 	}
 
 	@Override
@@ -154,13 +151,16 @@ public class Locale extends BaseEntity<Integer> implements Serializable {
 		if (!(o instanceof Locale)) {
 			return false;
 		}
+		if (!super.equals(o)) {
+			return false;
+		}
 		Locale locale = (Locale) o;
-		return getDeleted() == locale.getDeleted() && Objects.equals(localeId, locale.localeId) && Objects.equals(languageCode, locale.languageCode) && Objects.equals(countryCode, locale.countryCode) && Objects.equals(language, locale.language) && Objects.equals(languageNative, locale.languageNative) && Objects.equals(getDateCreated(), locale.getDateCreated()) && Objects.equals(getUserCreated(), locale.getUserCreated()) && Objects.equals(messages, locale.messages) && Objects.equals(users, locale.users);
+		return isDeleted() == locale.isDeleted() && Objects.equals(getLocaleId(), locale.getLocaleId()) && Objects.equals(getLanguageCode(), locale.getLanguageCode()) && Objects.equals(getCountryCode(), locale.getCountryCode()) && Objects.equals(getLanguage(), locale.getLanguage()) && Objects.equals(getLanguageNative(), locale.getLanguageNative()) && Objects.equals(getMessages(), locale.getMessages()) && Objects.equals(getUsers(), locale.getUsers()) && Objects.equals(getDateCreated(), locale.getDateCreated()) && Objects.equals(getUserCreated(), locale.getUserCreated());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(localeId, languageCode, countryCode, language, languageNative, getDateCreated(), getDeleted(), getUserCreated(), messages, users);
+		return Objects.hash(super.hashCode(), getLocaleId(), getLanguageCode(), getCountryCode(), getLanguage(), getLanguageNative(), getMessages(), getUsers(), getDateCreated(), isDeleted(), getUserCreated());
 	}
 
 	@Override
@@ -171,11 +171,11 @@ public class Locale extends BaseEntity<Integer> implements Serializable {
 		sb.append(", countryCode='").append(countryCode).append('\'');
 		sb.append(", language='").append(language).append('\'');
 		sb.append(", languageNative='").append(languageNative).append('\'');
+		sb.append(", messages=").append(messages);
+		sb.append(", users=").append(users);
 		sb.append(", dateCreated=").append(dateCreated);
 		sb.append(", deleted=").append(deleted);
 		sb.append(", userCreated=").append(userCreated);
-		sb.append(", messages=").append(messages);
-		sb.append(", user=").append(users);
 		sb.append('}');
 		return sb.toString();
 	}

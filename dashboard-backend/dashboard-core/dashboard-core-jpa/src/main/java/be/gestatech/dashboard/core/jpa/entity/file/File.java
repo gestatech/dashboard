@@ -2,6 +2,9 @@ package be.gestatech.dashboard.core.jpa.entity.file;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,13 +18,15 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "FILE")
+@Table(name = File.TABLE_NAME)
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
-@AttributeOverride(name = "id", column = @Column(name = "FILE_ID"))
+@AttributeOverride(name = "ID", column = @Column(name = "FILE_ID"))
 public class File extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1928870383056751178L;
+
+	public static final String TABLE_NAME = "FILE";
 
 	@Column(name = "FILE_ID")
 	private Integer fileId;
@@ -53,11 +58,15 @@ public class File extends AbstractPersistable<Long> implements Serializable {
 	private LocalDateTime dateCreated;
 
 	@Basic(optional = false)
-	@Column(name = "Deleted")
+	@Column(name = "DELETED")
 	private boolean deleted;
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
+
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	private Users userCreated;
+
+	public File() {
+	}
 
 	public enum Extension {
 		DOC, DOCX, XLS, XLSX, PDF, TXT, JPG, PNG, XML, SQL
@@ -81,4 +90,102 @@ public class File extends AbstractPersistable<Long> implements Serializable {
 		}
 	}
 
+	public Integer getFileId() {
+		return fileId;
+	}
+
+	public void setFileId(Integer fileId) {
+		this.fileId = fileId;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public Extension getExtension() {
+		return extension;
+	}
+
+	public void setExtension(Extension extension) {
+		this.extension = extension;
+	}
+
+	public byte[] getFile() {
+		return file;
+	}
+
+	public void setFile(byte[] file) {
+		this.file = file;
+	}
+
+	public Long getSize() {
+		return size;
+	}
+
+	public void setSize(Long size) {
+		this.size = size;
+	}
+
+	public LocalDateTime getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(LocalDateTime dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public Users getUserCreated() {
+		return userCreated;
+	}
+
+	public void setUserCreated(Users userCreated) {
+		this.userCreated = userCreated;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof File)) {
+			return false;
+		}
+		if (!super.equals(o)) {
+			return false;
+		}
+		File file1 = (File) o;
+		return isDeleted() == file1.isDeleted() && Objects.equals(getFileId(), file1.getFileId()) && Objects.equals(getFileName(), file1.getFileName()) && getExtension() == file1.getExtension() && Arrays.equals(getFile(), file1.getFile()) && Objects.equals(getSize(), file1.getSize()) && Objects.equals(getDateCreated(), file1.getDateCreated()) && Objects.equals(getUserCreated(), file1.getUserCreated());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), getFileId(), getFileName(), getExtension(), getFile(), getSize(), getDateCreated(), isDeleted(), getUserCreated());
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("File{");
+		sb.append("fileId=").append(fileId);
+		sb.append(", fileName='").append(fileName).append('\'');
+		sb.append(", extension=").append(extension);
+		sb.append(", file=").append(Arrays.toString(file));
+		sb.append(", size=").append(size);
+		sb.append(", dateCreated=").append(dateCreated);
+		sb.append(", deleted=").append(deleted);
+		sb.append(", userCreated=").append(userCreated);
+		sb.append('}');
+		return sb.toString();
+	}
 }

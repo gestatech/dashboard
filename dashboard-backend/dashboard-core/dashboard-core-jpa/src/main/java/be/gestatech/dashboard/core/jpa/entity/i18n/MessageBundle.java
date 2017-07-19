@@ -8,53 +8,58 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 
 /**
  * Entity class Describes message in particular locale and type
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "MESSAGE_BUNDLE")
+@Table(name = MessageBundle.TABLE_NAME)
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
-public class MessageBundle extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "ID", column = @Column(name = "MESSAGE_BUNDLE_ID"))
+public class MessageBundle extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 6574392255017080137L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "MessageBundleId")
+	public static final String TABLE_NAME = "MESSAGE_BUNDLE";
+
+	@Column(name = "MESSAGE_BUNDLE_ID")
 	private Integer messageBundleId;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "MessageKey")
+	@Column(name = "MESSAGE_KEY")
 	private String messageKey;
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Value")
+	@Column(name = "VALUE")
 	private String value;
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Type")
+	@Column(name = "TYPE")
 	@Enumerated(EnumType.ORDINAL)
 	private Type type;
 	@ManyToOne
-	@JoinColumn(name = "Locale")
+	@JoinColumn(name = "LOCALE")
 	private Locale locale;
 
 	@Basic(optional = false)
-	@Column(name = "DateCreated")
+	@NotNull
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
+
 	@Basic(optional = false)
-	@Column(name = "Deleted")
+	@NotNull
+	@Column(name = "DELETED")
 	private boolean deleted;
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
+	@ManyToOne(optional = false)
 	private Users userCreated;
 
 	public MessageBundle() {
@@ -76,8 +81,8 @@ public class MessageBundle extends BaseEntity<Integer> implements Serializable {
 		return messageKey;
 	}
 
-	public void setMessageKey(String key) {
-		this.messageKey = key;
+	public void setMessageKey(String messageKey) {
+		this.messageKey = messageKey;
 	}
 
 	public String getValue() {
@@ -104,12 +109,10 @@ public class MessageBundle extends BaseEntity<Integer> implements Serializable {
 		this.locale = locale;
 	}
 
-	@Override
 	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	@Override
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
@@ -118,43 +121,16 @@ public class MessageBundle extends BaseEntity<Integer> implements Serializable {
 		return deleted;
 	}
 
-	@Override
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 
-	@Override
 	public Users getUserCreated() {
 		return userCreated;
 	}
 
-	@Override
 	public void setUserCreated(Users userCreated) {
 		this.userCreated = userCreated;
-	}
-
-	@Override
-	public Integer getId() {
-		return getMessageBundleId();
-	}
-
-	@Override
-	public void setId(Integer id) {
-		setMessageBundleId(id);
-	}
-
-	@Override
-	public boolean getDeleted() {
-		return deleted;
-	}
-
-	@Override
-	public int compareTo(MessageBundle bundle) {
-		int result = -1;
-		if (Objects.nonNull(bundle)) {
-			result = messageKey.compareTo(bundle.getMessageKey());
-		}
-		return result;
 	}
 
 	@Override
@@ -165,13 +141,16 @@ public class MessageBundle extends BaseEntity<Integer> implements Serializable {
 		if (!(o instanceof MessageBundle)) {
 			return false;
 		}
+		if (!super.equals(o)) {
+			return false;
+		}
 		MessageBundle that = (MessageBundle) o;
 		return isDeleted() == that.isDeleted() && Objects.equals(getMessageBundleId(), that.getMessageBundleId()) && Objects.equals(getMessageKey(), that.getMessageKey()) && Objects.equals(getValue(), that.getValue()) && getType() == that.getType() && Objects.equals(getLocale(), that.getLocale()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getMessageBundleId(), getMessageKey(), getValue(), getType(), getLocale(), getDateCreated(), isDeleted(), getUserCreated());
+		return Objects.hash(super.hashCode(), getMessageBundleId(), getMessageKey(), getValue(), getType(), getLocale(), getDateCreated(), isDeleted(), getUserCreated());
 	}
 
 	@Override

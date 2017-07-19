@@ -1,18 +1,11 @@
 package be.gestatech.dashboard.core.jpa.entity.delivery;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import be.gestatech.core.api.persistence.AbstractPersistable;
@@ -27,7 +20,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @Entity
 @Table(name = DeliveryGroup.TABLE_NAME)
 @XmlRootElement
-@AttributeOverride(name = "id", column = @Column(name = "DELIVERY_GROUP_ID"))
+@AttributeOverride(name = "ID", column = @Column(name = "DELIVERY_GROUP_ID"))
 public class DeliveryGroup extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = -9093609183394217742L;
@@ -55,6 +48,19 @@ public class DeliveryGroup extends AbstractPersistable<Long> implements Serializ
 
 	@ManyToMany(mappedBy = "DELIVERY_GROUPS")
 	private List<MessageScheduler> messageSchedulers;
+
+	@Basic(optional = false)
+	@Column(name = "CREATED_ON")
+	@Temporal(TemporalType.TIMESTAMP)
+	private LocalDateTime dateCreated;
+
+	@Basic(optional = false)
+	@Column(name = "DELETED")
+	private boolean deleted;
+
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	private Users userCreated;
 
 	public DeliveryGroup() {
 	}
@@ -107,6 +113,30 @@ public class DeliveryGroup extends AbstractPersistable<Long> implements Serializ
 		this.messageSchedulers = messageSchedulers;
 	}
 
+	public LocalDateTime getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(LocalDateTime dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public Users getUserCreated() {
+		return userCreated;
+	}
+
+	public void setUserCreated(Users userCreated) {
+		this.userCreated = userCreated;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -119,12 +149,12 @@ public class DeliveryGroup extends AbstractPersistable<Long> implements Serializ
 			return false;
 		}
 		DeliveryGroup that = (DeliveryGroup) o;
-		return Objects.equals(deliveryGroupId, that.deliveryGroupId) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(users, that.users) && Objects.equals(userGroups, that.userGroups) && Objects.equals(messageSchedulers, that.messageSchedulers);
+		return isDeleted() == that.isDeleted() && Objects.equals(getDeliveryGroupId(), that.getDeliveryGroupId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getUsers(), that.getUsers()) && Objects.equals(getUserGroups(), that.getUserGroups()) && Objects.equals(getMessageSchedulers(), that.getMessageSchedulers()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.hashCode(), deliveryGroupId, name, description, users, userGroups, messageSchedulers);
+		return Objects.hash(super.hashCode(), getDeliveryGroupId(), getName(), getDescription(), getUsers(), getUserGroups(), getMessageSchedulers(), getDateCreated(), isDeleted(), getUserCreated());
 	}
 
 	@Override
@@ -136,6 +166,9 @@ public class DeliveryGroup extends AbstractPersistable<Long> implements Serializ
 		sb.append(", users=").append(users);
 		sb.append(", userGroups=").append(userGroups);
 		sb.append(", messageSchedulers=").append(messageSchedulers);
+		sb.append(", dateCreated=").append(dateCreated);
+		sb.append(", deleted=").append(deleted);
+		sb.append(", userCreated=").append(userCreated);
 		sb.append('}');
 		return sb.toString();
 	}

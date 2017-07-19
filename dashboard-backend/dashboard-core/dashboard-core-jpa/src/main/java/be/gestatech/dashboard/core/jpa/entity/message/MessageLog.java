@@ -9,8 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -18,52 +18,53 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "MESSAGE_LOG")
+@Table(name = MessageLog.TABLE_NAME)
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
-public class MessageLog extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "ID", column = @Column(name = "MESSAGE_LOG_ID"))
+public class MessageLog extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 6292643524288361718L;
 
-	@Id
-	@Column(name = "MessageLogId")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public static final String TABLE_NAME = "MESSAGE_LOG";
+
+	@Column(name = "MESSAGE_LOG_ID")
 	private Integer messageLogId;
 
 	@Basic
-	@Column(name = "UId")
+	@Column(name = "UID")
 	private String uId;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Status")
+	@Column(name = "STATUS")
 	@Enumerated(EnumType.ORDINAL)
 	private Status status;
 
-	@JoinColumn(name = "Transaction", referencedColumnName = "TransactionLogId")
+	@JoinColumn(name = "TRANSACTION", referencedColumnName = "TRANSACTION_LOG_ID")
 	@ManyToOne(optional = false)
 	private TransactionLog transaction;
 
-	@JoinColumn(name = "Recipient", referencedColumnName = "UserId")
+	@JoinColumn(name = "RECIPIENT", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users recipient;
 
 	@Size(max = 200)
-	@Column(name = "Details")
+	@Column(name = "DETAILS")
 	private String details;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateCreated")
+	@Column(name = "CREATED_DATE")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Deleted")
+	@Column(name = "DELETED")
 	private boolean deleted;
 
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users userCreated;
 
@@ -71,43 +72,31 @@ public class MessageLog extends BaseEntity<Integer> implements Serializable {
 	}
 
 	public enum Status {
-		NEW,
-		SENT,
-		WAITING,
-		SENDING,
-		PAUSED,
-		CANCELED,
-		DELIVERED,
-		DELIVERY_ERROR,
-		SEND_ERROR
+		NEW, SENT, WAITING, SENDING, PAUSED, CANCELED, DELIVERED, DELIVERY_ERROR, SEND_ERROR
 	}
-
 
 	public Integer getMessageLogId() {
 		return messageLogId;
 	}
+
 	public void setMessageLogId(Integer messageLogId) {
 		this.messageLogId = messageLogId;
 	}
+
 	public String getuId() {
 		return uId;
 	}
+
 	public void setuId(String uId) {
 		this.uId = uId;
 	}
+
 	public Status getStatus() {
 		return status;
 	}
+
 	public void setStatus(Status status) {
 		this.status = status;
-	}
-
-	public Users getRecipient() {
-		return recipient;
-	}
-
-	public void setRecipient(Users recipient) {
-		this.recipient = recipient;
 	}
 
 	public TransactionLog getTransaction() {
@@ -118,6 +107,14 @@ public class MessageLog extends BaseEntity<Integer> implements Serializable {
 		this.transaction = transaction;
 	}
 
+	public Users getRecipient() {
+		return recipient;
+	}
+
+	public void setRecipient(Users recipient) {
+		this.recipient = recipient;
+	}
+
 	public String getDetails() {
 		return details;
 	}
@@ -126,37 +123,28 @@ public class MessageLog extends BaseEntity<Integer> implements Serializable {
 		this.details = details;
 	}
 
-	@Override
 	public Date getDateCreated() {
 		return dateCreated;
 	}
-	@Override
+
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	@Override
-	public boolean getDeleted() {
+
+	public boolean isDeleted() {
 		return deleted;
 	}
-	@Override
+
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
-	@Override
+
 	public Users getUserCreated() {
 		return userCreated;
 	}
-	@Override
+
 	public void setUserCreated(Users userCreated) {
 		this.userCreated = userCreated;
-	}
-	@Override
-	public Integer getId() {
-		return messageLogId;
-	}
-	@Override
-	public void setId(Integer id) {
-		this.messageLogId = id;
 	}
 
 	@Override
@@ -167,13 +155,16 @@ public class MessageLog extends BaseEntity<Integer> implements Serializable {
 		if (!(o instanceof MessageLog)) {
 			return false;
 		}
+		if (!super.equals(o)) {
+			return false;
+		}
 		MessageLog that = (MessageLog) o;
-		return getDeleted() == that.getDeleted() && Objects.equals(getMessageLogId(), that.getMessageLogId()) && Objects.equals(getuId(), that.getuId()) && getStatus() == that.getStatus() && Objects.equals(getTransaction(), that.getTransaction()) && Objects.equals(getRecipient(), that.getRecipient()) && Objects.equals(getDetails(), that.getDetails()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated());
+		return isDeleted() == that.isDeleted() && Objects.equals(getMessageLogId(), that.getMessageLogId()) && Objects.equals(getuId(), that.getuId()) && getStatus() == that.getStatus() && Objects.equals(getTransaction(), that.getTransaction()) && Objects.equals(getRecipient(), that.getRecipient()) && Objects.equals(getDetails(), that.getDetails()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getMessageLogId(), getuId(), getStatus(), getTransaction(), getRecipient(), getDetails(), getDateCreated(), getDeleted(), getUserCreated());
+		return Objects.hash(super.hashCode(), getMessageLogId(), getuId(), getStatus(), getTransaction(), getRecipient(), getDetails(), getDateCreated(), isDeleted(), getUserCreated());
 	}
 
 	@Override

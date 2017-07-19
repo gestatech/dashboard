@@ -9,11 +9,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
+import be.gestatech.core.api.persistence.AbstractPersistable;
+import be.gestatech.core.api.persistence.AuditEntityListener;
+import be.gestatech.core.api.persistence.Persistable;
 import be.gestatech.dashboard.core.jpa.entity.delivery.DeliveryGroup;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
-import org.joda.time.DateTime;
-
 import be.gestatech.dashboard.resources.Message;
 
 /**
@@ -21,70 +21,74 @@ import be.gestatech.dashboard.resources.Message;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "MessageScheduler")
+@Table(name = MessageScheduler.TABLE_NAME)
 @XmlRootElement
-public class MessageScheduler extends BaseEntity<Integer> implements Serializable {
+@EntityListeners(AuditEntityListener.class)
+@AttributeOverride(name = "ID", column = @Column(name = "MESSAGE_SCHEDULER_ID"))
+public class MessageScheduler extends AbstractPersistable<Long> implements Serializable {
 
 	private static final long serialVersionUID = 4717944326319985645L;
 
-	@Id
-	@Column(name = "MessageSchedulerId")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public static final String TABLE_NAME = "MESSAGE_SCHEDULER";
+
+	@Column(name = "MESSAGE_SCHEDULER_ID")
 	private Integer messageSchedulerId;
 
-	@JoinColumn(name = "MessageTemplate", referencedColumnName = "MessageTemplateId")
+	@JoinColumn(name = "MESSAGE_TEMPLATE", referencedColumnName = "MESSAGE_TEMPLATE_ID")
 	@ManyToOne(optional = false)
 	@NotNull
 	private MessageTemplate messageTemplate;
 
 	@ManyToMany
-	@JoinTable(name = "MessageSchedulerHasDeliveryGroup", joinColumns = { @JoinColumn(name = "MessageSchedulerId", referencedColumnName = "MessageSchedulerId") }, inverseJoinColumns = { @JoinColumn(name = "DeliveryGroupId", referencedColumnName = "DeliveryGroupId") })
+	@JoinTable(name = "MESSAGE_SCHEDULER_HAS_DELIVERY_GROUP", joinColumns = { @JoinColumn(name = "MESSAGE_SCHEDULER_ID", referencedColumnName = "MESSAGE_SCHEDULER_ID") }, inverseJoinColumns = { @JoinColumn(name = "DELIVERY_GROUP_ID", referencedColumnName = "DELIVERY_GROUP_ID") })
 	private List<DeliveryGroup> deliveryGroups;
 
-	@JoinColumn(name = "User", referencedColumnName = "UserId")
+	@JoinColumn(name = "USER", referencedColumnName = "USER_ID")
 	@ManyToOne
 	private Users user;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateStart")
+	@Column(name = "START_DATE")
 	@Temporal(TemporalType.DATE)
-	private Date dateStart;
+	private Date satrtDate;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateEnd")
+	@Column(name = "END_DATE")
 	@Temporal(TemporalType.DATE)
-	private Date dateEnd;
+	private Date endDate;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Time")
+	@Column(name = "TIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date time;
 
 	@NotNull
-	@Column(name = "DayOfWeekId", nullable = false)
+	@Column(name = "DAY_OF_WEEK_ID", nullable = false)
 	@ElementCollection(targetClass = DayOfWeek.class)
-	@CollectionTable(name = "SchedulerHasDaysOfWeek", joinColumns = @JoinColumn(name = "SchedulerId"))
+	@CollectionTable(name = "SCHEDULER_HAS_DAY_OF_WEEK", joinColumns = @JoinColumn(name = "SCHEDULER_ID"))
 	@Enumerated(EnumType.ORDINAL)
 	private List<DayOfWeek> daysOfWeek;
 
 	@Basic(optional = false)
-	@Column(name = "DateCreated")
+	@NotNull
+	@Column(name = "CREATED_DATE")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Deleted")
+	@Column(name = "DELETED")
 	private boolean deleted;
 
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users userCreated;
 
-	public enum DayOfWeek implements BaseEntity<Integer> {
+	public enum DayOfWeek implements Persistable<Integer> {
+
 		MONDAY(Message.getMessage("CALENDAR_MONDAY")), TUESDAY(Message.getMessage("CALENDAR_TUESDAY")), WEDNESDAY(Message.getMessage("CALENDAR_WEDNESDAY")), THURSDAY(Message.getMessage("CALENDAR_THURSDAY")), FRIDAY(Message.getMessage("CALENDAR_FRIDAY")), SATURDAY(Message.getMessage("CALENDAR_SATURDAY")), SUNDAY(Message.getMessage("CALENDAR_SUNDAY"));
 
 		DayOfWeek(String localName) {
@@ -107,38 +111,8 @@ public class MessageScheduler extends BaseEntity<Integer> implements Serializabl
 		}
 
 		@Override
-		public void setId(Integer id) {
-
-		}
-
-		@Override
-		public Users getUserCreated() {
-			return null;
-		}
-
-		@Override
-		public void setUserCreated(Users userCreated) {
-
-		}
-
-		@Override
-		public Date getDateCreated() {
-			return null;
-		}
-
-		@Override
-		public void setDateCreated(Date datereated) {
-
-		}
-
-		@Override
-		public boolean getDeleted() {
+		public boolean isNew() {
 			return false;
-		}
-
-		@Override
-		public void setDeleted(boolean deleted) {
-
 		}
 	}
 
@@ -150,20 +124,20 @@ public class MessageScheduler extends BaseEntity<Integer> implements Serializabl
 		this.messageSchedulerId = messageSchedulerId;
 	}
 
-	public List<DeliveryGroup> getDeliveryGroups() {
-		return deliveryGroups;
-	}
-
-	public void setDeliveryGroups(List<DeliveryGroup> deliveryGroups) {
-		this.deliveryGroups = deliveryGroups;
-	}
-
 	public MessageTemplate getMessageTemplate() {
 		return messageTemplate;
 	}
 
 	public void setMessageTemplate(MessageTemplate messageTemplate) {
 		this.messageTemplate = messageTemplate;
+	}
+
+	public List<DeliveryGroup> getDeliveryGroups() {
+		return deliveryGroups;
+	}
+
+	public void setDeliveryGroups(List<DeliveryGroup> deliveryGroups) {
+		this.deliveryGroups = deliveryGroups;
 	}
 
 	public Users getUser() {
@@ -174,20 +148,20 @@ public class MessageScheduler extends BaseEntity<Integer> implements Serializabl
 		this.user = user;
 	}
 
-	public Date getDateStart() {
-		return dateStart;
+	public Date getSatrtDate() {
+		return satrtDate;
 	}
 
-	public void setDateStart(Date dateStart) {
-		this.dateStart = dateStart;
+	public void setSatrtDate(Date satrtDate) {
+		this.satrtDate = satrtDate;
 	}
 
-	public Date getDateEnd() {
-		return dateEnd;
+	public Date getEndDate() {
+		return endDate;
 	}
 
-	public void setDateEnd(Date dateEnd) {
-		this.dateEnd = new DateTime(dateEnd).withTime(23, 59, 59, 999).toDate();
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public Date getTime() {
@@ -206,44 +180,28 @@ public class MessageScheduler extends BaseEntity<Integer> implements Serializabl
 		this.daysOfWeek = daysOfWeek;
 	}
 
-	@Override
 	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	@Override
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	@Override
-	public boolean getDeleted() {
+	public boolean isDeleted() {
 		return deleted;
 	}
 
-	@Override
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 
-	@Override
 	public Users getUserCreated() {
 		return userCreated;
 	}
 
-	@Override
 	public void setUserCreated(Users userCreated) {
 		this.userCreated = userCreated;
-	}
-
-	@Override
-	public Integer getId() {
-		return messageSchedulerId;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		messageSchedulerId = id;
 	}
 
 	@Override
@@ -254,13 +212,16 @@ public class MessageScheduler extends BaseEntity<Integer> implements Serializabl
 		if (!(o instanceof MessageScheduler)) {
 			return false;
 		}
+		if (!super.equals(o)) {
+			return false;
+		}
 		MessageScheduler that = (MessageScheduler) o;
-		return getDeleted() == that.getDeleted() && Objects.equals(getMessageSchedulerId(), that.getMessageSchedulerId()) && Objects.equals(getMessageTemplate(), that.getMessageTemplate()) && Objects.equals(getDeliveryGroups(), that.getDeliveryGroups()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getDateStart(), that.getDateStart()) && Objects.equals(getDateEnd(), that.getDateEnd()) && Objects.equals(getTime(), that.getTime()) && Objects.equals(getDaysOfWeek(), that.getDaysOfWeek()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated());
+		return isDeleted() == that.isDeleted() && Objects.equals(getMessageSchedulerId(), that.getMessageSchedulerId()) && Objects.equals(getMessageTemplate(), that.getMessageTemplate()) && Objects.equals(getDeliveryGroups(), that.getDeliveryGroups()) && Objects.equals(getUser(), that.getUser()) && Objects.equals(getSatrtDate(), that.getSatrtDate()) && Objects.equals(getEndDate(), that.getEndDate()) && Objects.equals(getTime(), that.getTime()) && Objects.equals(getDaysOfWeek(), that.getDaysOfWeek()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getMessageSchedulerId(), getMessageTemplate(), getDeliveryGroups(), getUser(), getDateStart(), getDateEnd(), getTime(), getDaysOfWeek(), getDateCreated(), getDeleted(), getUserCreated());
+		return Objects.hash(super.hashCode(), getMessageSchedulerId(), getMessageTemplate(), getDeliveryGroups(), getUser(), getSatrtDate(), getEndDate(), getTime(), getDaysOfWeek(), getDateCreated(), isDeleted(), getUserCreated());
 	}
 
 	@Override
@@ -270,8 +231,8 @@ public class MessageScheduler extends BaseEntity<Integer> implements Serializabl
 		sb.append(", messageTemplate=").append(messageTemplate);
 		sb.append(", deliveryGroups=").append(deliveryGroups);
 		sb.append(", user=").append(user);
-		sb.append(", dateStart=").append(dateStart);
-		sb.append(", dateEnd=").append(dateEnd);
+		sb.append(", satrtDate=").append(satrtDate);
+		sb.append(", endDate=").append(endDate);
 		sb.append(", time=").append(time);
 		sb.append(", daysOfWeek=").append(daysOfWeek);
 		sb.append(", dateCreated=").append(dateCreated);
