@@ -22,14 +22,14 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
 @AttributeOverride(name = "ID", column = @Column(name = "FILE_ID"))
-public class File extends AbstractPersistable<Long> implements Serializable {
+public class File extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 1928870383056751178L;
 
 	public static final String TABLE_NAME = "FILE";
 
 	@Column(name = "FILE_ID")
-	private Integer fileId;
+	private Long fileId;
 
 	@Basic(optional = false)
 	@NotNull
@@ -90,11 +90,11 @@ public class File extends AbstractPersistable<Long> implements Serializable {
 		}
 	}
 
-	public Integer getFileId() {
+	public Long getFileId() {
 		return fileId;
 	}
 
-	public void setFileId(Integer fileId) {
+	public void setFileId(Long fileId) {
 		this.fileId = fileId;
 	}
 

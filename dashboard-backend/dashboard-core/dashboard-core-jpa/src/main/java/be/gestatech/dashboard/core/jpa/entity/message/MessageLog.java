@@ -22,14 +22,14 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
 @AttributeOverride(name = "ID", column = @Column(name = "MESSAGE_LOG_ID"))
-public class MessageLog extends AbstractPersistable<Long> implements Serializable {
+public class MessageLog extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 6292643524288361718L;
 
 	public static final String TABLE_NAME = "MESSAGE_LOG";
 
 	@Column(name = "MESSAGE_LOG_ID")
-	private Integer messageLogId;
+	private Long messageLogId;
 
 	@Basic
 	@Column(name = "UID")
@@ -75,11 +75,11 @@ public class MessageLog extends AbstractPersistable<Long> implements Serializabl
 		NEW, SENT, WAITING, SENDING, PAUSED, CANCELED, DELIVERED, DELIVERY_ERROR, SEND_ERROR
 	}
 
-	public Integer getMessageLogId() {
+	public Long getMessageLogId() {
 		return messageLogId;
 	}
 
-	public void setMessageLogId(Integer messageLogId) {
+	public void setMessageLogId(Long messageLogId) {
 		this.messageLogId = messageLogId;
 	}
 

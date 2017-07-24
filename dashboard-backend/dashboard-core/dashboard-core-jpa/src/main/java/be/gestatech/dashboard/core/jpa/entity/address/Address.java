@@ -20,7 +20,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @Table(name = Address.TABLE_NAME)
 @XmlRootElement
 @AttributeOverride(name = "ID", column = @Column(name = "ADDRESS_ID"))
-public class Address extends AbstractPersistable<Long> implements Serializable {
+public class Address extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = -7396925612281759646L;
 

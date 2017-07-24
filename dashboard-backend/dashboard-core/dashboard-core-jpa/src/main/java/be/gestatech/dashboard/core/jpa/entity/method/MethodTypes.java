@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import be.gestatech.core.api.persistence.AuditEntityListener;
+import be.gestatech.core.api.persistence.Persistable;
 import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
@@ -31,7 +32,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 	@NamedQuery(name = "MethodTypes.findByDeleted", query = "SELECT m FROM MethodTypes m WHERE m.deleted = :deleted")
 })
 @EntityListeners(AuditEntityListener.class)
-public class MethodTypes extends BaseEntity<Integer> implements Serializable {
+public class MethodTypes implements Persistable<Integer> implements Serializable {
 
 	private static final long serialVersionUID = 3383111202158692806L;
 

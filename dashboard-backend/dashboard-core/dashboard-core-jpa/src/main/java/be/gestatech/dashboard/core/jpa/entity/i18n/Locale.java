@@ -21,14 +21,14 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
 @AttributeOverride(name = "ID", column = @Column(name = "LOCAL_ID"))
-public class Locale extends AbstractPersistable<Long> implements Serializable {
+public class Locale extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = -3413937225651498117L;
 
 	public static final String TABLE_NAME = "LOCALE";
 
 	@Column(name = "LOCAL_ID")
-	private Integer localeId;
+	private Long localeId;
 
 	@Column(name = "LANGUAGE_CODE")
 	private String languageCode;
@@ -63,11 +63,11 @@ public class Locale extends AbstractPersistable<Long> implements Serializable {
 	public Locale() {
 	}
 
-	public Integer getLocaleId() {
+	public Long getLocaleId() {
 		return localeId;
 	}
 
-	public void setLocaleId(Integer localeId) {
+	public void setLocaleId(Long localeId) {
 		this.localeId = localeId;
 	}
 

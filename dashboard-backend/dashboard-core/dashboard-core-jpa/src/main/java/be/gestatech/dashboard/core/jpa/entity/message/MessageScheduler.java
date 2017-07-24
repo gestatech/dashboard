@@ -25,14 +25,14 @@ import be.gestatech.dashboard.resources.Message;
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
 @AttributeOverride(name = "ID", column = @Column(name = "MESSAGE_SCHEDULER_ID"))
-public class MessageScheduler extends AbstractPersistable<Long> implements Serializable {
+public class MessageScheduler extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 4717944326319985645L;
 
 	public static final String TABLE_NAME = "MESSAGE_SCHEDULER";
 
 	@Column(name = "MESSAGE_SCHEDULER_ID")
-	private Integer messageSchedulerId;
+	private Long messageSchedulerId;
 
 	@JoinColumn(name = "MESSAGE_TEMPLATE", referencedColumnName = "MESSAGE_TEMPLATE_ID")
 	@ManyToOne(optional = false)
@@ -116,11 +116,11 @@ public class MessageScheduler extends AbstractPersistable<Long> implements Seria
 		}
 	}
 
-	public Integer getMessageSchedulerId() {
+	public Long getMessageSchedulerId() {
 		return messageSchedulerId;
 	}
 
-	public void setMessageSchedulerId(Integer messageSchedulerId) {
+	public void setMessageSchedulerId(Long messageSchedulerId) {
 		this.messageSchedulerId = messageSchedulerId;
 	}
 

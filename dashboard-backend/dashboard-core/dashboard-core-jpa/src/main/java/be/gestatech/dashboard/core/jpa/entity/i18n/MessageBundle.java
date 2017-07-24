@@ -28,7 +28,7 @@ public class MessageBundle extends AbstractPersistable<Long> implements Serializ
 	public static final String TABLE_NAME = "MESSAGE_BUNDLE";
 
 	@Column(name = "MESSAGE_BUNDLE_ID")
-	private Integer messageBundleId;
+	private Long messageBundleId;
 
 	@Basic(optional = false)
 	@NotNull
@@ -69,11 +69,11 @@ public class MessageBundle extends AbstractPersistable<Long> implements Serializ
 		MESSAGE, CONFIG, MAPPING
 	}
 
-	public Integer getMessageBundleId() {
+	public Long getMessageBundleId() {
 		return messageBundleId;
 	}
 
-	public void setMessageBundleId(Integer messageBundleId) {
+	public void setMessageBundleId(Long messageBundleId) {
 		this.messageBundleId = messageBundleId;
 	}
 

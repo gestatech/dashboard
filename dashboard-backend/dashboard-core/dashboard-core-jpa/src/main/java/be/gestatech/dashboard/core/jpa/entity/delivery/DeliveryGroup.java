@@ -21,14 +21,14 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 @Table(name = DeliveryGroup.TABLE_NAME)
 @XmlRootElement
 @AttributeOverride(name = "ID", column = @Column(name = "DELIVERY_GROUP_ID"))
-public class DeliveryGroup extends AbstractPersistable<Long> implements Serializable {
+public class DeliveryGroup extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = -9093609183394217742L;
 
 	public static final String TABLE_NAME = "DELIVERY_GROUP";
 
 	@Column(name = "DELIVERY_GROUP_ID")
-	private Integer deliveryGroupId;
+	private Long deliveryGroupId;
 
 	@Basic(optional = false)
 	@Column(name = "NAME")
@@ -65,11 +65,11 @@ public class DeliveryGroup extends AbstractPersistable<Long> implements Serializ
 	public DeliveryGroup() {
 	}
 
-	public Integer getDeliveryGroupId() {
+	public Long getDeliveryGroupId() {
 		return deliveryGroupId;
 	}
 
-	public void setDeliveryGroupId(Integer deliveryGroupId) {
+	public void setDeliveryGroupId(Long deliveryGroupId) {
 		this.deliveryGroupId = deliveryGroupId;
 	}
 

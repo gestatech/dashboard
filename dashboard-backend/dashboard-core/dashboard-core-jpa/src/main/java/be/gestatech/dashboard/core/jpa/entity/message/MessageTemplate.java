@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.message;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,8 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -17,46 +16,47 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "MESSAGE_TEMPLATE")
+@Table(name = MessageTemplate.TABLE_NAME)
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
-public class MessageTemplate extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "ID", column = @Column(name = "MESSAGE_TEMPLATE_ID"))
+public class MessageTemplate extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = -8874253374384369771L;
 
-	@Id
-	@Column(name = "MessageTemplateId")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public static final String TABLE_NAME = "MESSAGE_TEMPLATE";
+
+	@Column(name = "MESSAGE_TEMPLATE_ID")
 	private Integer messageTemplateId;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Name")
+	@Column(name = "NAME")
 	private String name;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Content", length=5000)
+	@Column(name = "CONTENT", length = 5000)
 	private String content;
 
 	@Basic
-	@Column(name = "Description")
+	@Column(name = "DESCRIPTION")
 	private String description;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Type")
+	@Column(name = "TYPE")
 	@Enumerated(EnumType.ORDINAL)
 	private Type type;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "System")
+	@Column(name = "SYSTEM")
 	private Boolean system;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateCreated")
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 
@@ -73,8 +73,7 @@ public class MessageTemplate extends BaseEntity<Integer> implements Serializable
 	}
 
 	public static enum Type {
-		SMS,
-		EMAIL;
+		SMS, EMAIL;
 	}
 
 	public Integer getMessageTemplateId() {
@@ -85,7 +84,6 @@ public class MessageTemplate extends BaseEntity<Integer> implements Serializable
 		this.messageTemplateId = messageTemplateId;
 	}
 
-
 	public String getName() {
 		return name;
 	}
@@ -94,7 +92,6 @@ public class MessageTemplate extends BaseEntity<Integer> implements Serializable
 		this.name = name;
 	}
 
-
 	public String getContent() {
 		return content;
 	}
@@ -102,7 +99,6 @@ public class MessageTemplate extends BaseEntity<Integer> implements Serializable
 	public void setContent(String content) {
 		this.content = content;
 	}
-
 
 	public String getDescription() {
 		return description;
@@ -136,30 +132,37 @@ public class MessageTemplate extends BaseEntity<Integer> implements Serializable
 	public Date getDateCreated() {
 		return dateCreated;
 	}
+
 	@Override
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
+
 	@Override
 	public boolean getDeleted() {
 		return deleted;
 	}
+
 	@Override
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+
 	@Override
 	public Users getUserCreated() {
 		return userCreated;
 	}
+
 	@Override
 	public void setUserCreated(Users userCreated) {
 		this.userCreated = userCreated;
 	}
+
 	@Override
 	public Integer getId() {
 		return messageTemplateId;
 	}
+
 	@Override
 	public void setId(Integer id) {
 		this.messageTemplateId = id;
