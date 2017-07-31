@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.method;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -9,11 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
-import be.gestatech.core.api.persistence.Persistable;
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -21,7 +18,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "METHOD_TYPE")
+@Table(name = MethodTypes.TABLE_NAME)
 @XmlRootElement
 @NamedQueries({
 	@NamedQuery(name = "MethodTypes.findAll", query = "SELECT m FROM MethodTypes m"),
@@ -32,60 +29,54 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 	@NamedQuery(name = "MethodTypes.findByDeleted", query = "SELECT m FROM MethodTypes m WHERE m.deleted = :deleted")
 })
 @EntityListeners(AuditEntityListener.class)
-public class MethodTypes implements Persistable<Integer> implements Serializable {
+@AttributeOverride(name = "ID", column = @Column(name = "METHOD_TYPE_ID"))
+public class MethodTypes extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 3383111202158692806L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Basic(optional = false)
-	@Column(name = "MethodTypeId")
-	private Integer methodTypeId;
+	public static final String TABLE_NAME = "METHOD_TYPE";
+
+	@Column(name = "METHOD_TYPE_ID")
+	private Long methodTypeId;
+
 	@Basic(optional = false)
 	@NotNull
 	@Size(min = 1, max = 25)
-	@Column(name = "ShortName")
+	@Column(name = "SHORT_NAME")
 	private String shortName;
+
 	@Basic(optional = false)
 	@NotNull
 	@Size(min = 1, max = 100)
-	@Column(name = "FullName")
+	@Column(name = "FULL_NAME")
 	private String fullName;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateCreated")
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Deleted")
+	@Column(name = "DELETED")
 	private boolean deleted;
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
+
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users userCreated;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "methodType")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "METHOD_TYPE")
 	private Collection<Methods> methodsCollection;
 
 	public MethodTypes() {
 	}
 
-	public MethodTypes(Integer methodTypeId) {
-		this.methodTypeId = methodTypeId;
-	}
-
-	public MethodTypes(Integer methodTypeId, String shortName, String fullName, Date dateCreated, boolean deleted) {
-		this.methodTypeId = methodTypeId;
-		this.shortName = shortName;
-		this.fullName = fullName;
-		this.dateCreated = dateCreated;
-		this.deleted = deleted;
-	}
-
-	public Integer getMethodTypeId() {
+	public Long getMethodTypeId() {
 		return methodTypeId;
 	}
 
-	public void setMethodTypeId(Integer methodTypeId) {
+	public void setMethodTypeId(Long methodTypeId) {
 		this.methodTypeId = methodTypeId;
 	}
 
@@ -105,47 +96,30 @@ public class MethodTypes implements Persistable<Integer> implements Serializable
 		this.fullName = fullName;
 	}
 
-	@Override
-	public Integer getId() {
-		return getMethodTypeId();
-	}
-
-	@Override
-	public void setId(Integer id) {
-		setMethodTypeId(id);
-	}
-
-	@Override
 	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	@Override
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	@Override
-	public boolean getDeleted() {
+	public boolean isDeleted() {
 		return deleted;
 	}
 
-	@Override
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 
-	@Override
 	public Users getUserCreated() {
 		return userCreated;
 	}
 
-	@Override
 	public void setUserCreated(Users userCreated) {
 		this.userCreated = userCreated;
 	}
 
-	@XmlTransient
 	public Collection<Methods> getMethodsCollection() {
 		return methodsCollection;
 	}
@@ -162,13 +136,16 @@ public class MethodTypes implements Persistable<Integer> implements Serializable
 		if (!(o instanceof MethodTypes)) {
 			return false;
 		}
+		if (!super.equals(o)) {
+			return false;
+		}
 		MethodTypes that = (MethodTypes) o;
-		return getDeleted() == that.getDeleted() && Objects.equals(getMethodTypeId(), that.getMethodTypeId()) && Objects.equals(getShortName(), that.getShortName()) && Objects.equals(getFullName(), that.getFullName()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated()) && Objects.equals(getMethodsCollection(), that.getMethodsCollection());
+		return isDeleted() == that.isDeleted() && Objects.equals(getMethodTypeId(), that.getMethodTypeId()) && Objects.equals(getShortName(), that.getShortName()) && Objects.equals(getFullName(), that.getFullName()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated()) && Objects.equals(getMethodsCollection(), that.getMethodsCollection());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getMethodTypeId(), getShortName(), getFullName(), getDateCreated(), getDeleted(), getUserCreated(), getMethodsCollection());
+		return Objects.hash(super.hashCode(), getMethodTypeId(), getShortName(), getFullName(), getDateCreated(), isDeleted(), getUserCreated(), getMethodsCollection());
 	}
 
 	@Override
