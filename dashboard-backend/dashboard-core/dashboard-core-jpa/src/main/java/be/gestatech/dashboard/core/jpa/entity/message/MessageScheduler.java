@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.message;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -74,7 +73,7 @@ public class MessageScheduler extends AbstractPersistable<Long> {
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "CREATED_DATE")
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 

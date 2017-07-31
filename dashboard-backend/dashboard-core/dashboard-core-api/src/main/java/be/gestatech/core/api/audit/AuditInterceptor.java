@@ -5,19 +5,20 @@
  */
 package be.gestatech.core.api.audit;
 
-import be.gestatech.core.api.audit.annotation.Audited;
-import be.gestatech.core.api.interceptor.AbstractInterceptor;
-import be.gestatech.core.api.interceptor.Signature;
 import java.util.Objects;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.interceptor.Interceptor;
+
+import be.gestatech.core.api.audit.annotation.Audited;
+import be.gestatech.core.api.interceptor.AbstractInterceptor;
+import be.gestatech.core.api.interceptor.Signature;
 
 /**
  *

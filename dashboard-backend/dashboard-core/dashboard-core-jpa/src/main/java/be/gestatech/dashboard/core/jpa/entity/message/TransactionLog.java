@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.message;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -10,8 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
@@ -19,51 +18,52 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "TRANSACTION_LOG")
+@Table(name = TransactionLog.TABLE_NAME)
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
-public class TransactionLog extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "ID", column = @Column(name = "TRANSACTION_LOG_ID"))
+public class TransactionLog extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 3868003612731634590L;
 
-	@Id
-	@Column(name = "TransactionLogId")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer transactionLogId;
+	public static final String TABLE_NAME = "TRANSACTION_LOG";
+
+	@Column(name = "TRANSACTION_LOG_ID")
+	private Long transactionLogId;
 
 	@Basic
-	@Column(name = "UId")
+	@Column(name = "UID")
 	private String uId;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Status")
+	@Column(name = "STATUS")
 	@Enumerated(EnumType.ORDINAL)
 	private Status status;
 
-	@JoinColumn(name = "MessageTemplate", referencedColumnName = "MessageTemplateId")
+	@JoinColumn(name = "MESSAGE_TEMPLATE", referencedColumnName = "MESSAGE_TEMPLATE_ID")
 	@ManyToOne(optional = false)
 	private MessageTemplate messageTemplate;
 
 	@Size(max = 255)
-	@Column(name = "Details")
+	@Column(name = "DETATILS")
 	private String details;
 
-	@Column(name = "RecipientsCount")
+	@Column(name = "RECIPIENTS_COUNT")
 	private Integer recipientsCount;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateCreated")
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Deleted")
+	@Column(name = "DELETED")
 	private boolean deleted;
 
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users userCreated;
 
@@ -81,20 +81,20 @@ public class TransactionLog extends BaseEntity<Integer> implements Serializable 
 		CANCELED;//status for sms
 	}
 
-	public Integer getTransactionLogId() {
+	public Long getTransactionLogId() {
 		return transactionLogId;
 	}
 
-	public void setTransactionLogId(Integer transactionLogId) {
+	public void setTransactionLogId(Long transactionLogId) {
 		this.transactionLogId = transactionLogId;
 	}
 
-	public MessageTemplate getMessageTemplate() {
-		return messageTemplate;
+	public String getuId() {
+		return uId;
 	}
 
-	public void setMessageTemplate(MessageTemplate messageTemplate) {
-		this.messageTemplate = messageTemplate;
+	public void setuId(String uId) {
+		this.uId = uId;
 	}
 
 	public Status getStatus() {
@@ -103,6 +103,14 @@ public class TransactionLog extends BaseEntity<Integer> implements Serializable 
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public MessageTemplate getMessageTemplate() {
+		return messageTemplate;
+	}
+
+	public void setMessageTemplate(MessageTemplate messageTemplate) {
+		this.messageTemplate = messageTemplate;
 	}
 
 	public String getDetails() {
@@ -121,52 +129,28 @@ public class TransactionLog extends BaseEntity<Integer> implements Serializable 
 		this.recipientsCount = recipientsCount;
 	}
 
-	@Override
 	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	@Override
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	@Override
-	public boolean getDeleted() {
+	public boolean isDeleted() {
 		return deleted;
 	}
 
-	@Override
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 
-	@Override
 	public Users getUserCreated() {
 		return userCreated;
 	}
 
-	@Override
 	public void setUserCreated(Users userCreated) {
 		this.userCreated = userCreated;
-	}
-
-	@Override
-	public Integer getId() {
-		return transactionLogId;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		transactionLogId = id;
-	}
-
-	public String getuId() {
-		return uId;
-	}
-
-	public void setuId(String uId) {
-		this.uId = uId;
 	}
 
 	public Collection<MessageLog> getMessageLogs() {
@@ -186,12 +170,12 @@ public class TransactionLog extends BaseEntity<Integer> implements Serializable 
 			return false;
 		}
 		TransactionLog that = (TransactionLog) o;
-		return getDeleted() == that.getDeleted() && Objects.equals(getTransactionLogId(), that.getTransactionLogId()) && Objects.equals(getuId(), that.getuId()) && getStatus() == that.getStatus() && Objects.equals(getMessageTemplate(), that.getMessageTemplate()) && Objects.equals(getDetails(), that.getDetails()) && Objects.equals(getRecipientsCount(), that.getRecipientsCount()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated()) && Objects.equals(getMessageLogs(), that.getMessageLogs());
+		return isDeleted() == that.isDeleted() && Objects.equals(getTransactionLogId(), that.getTransactionLogId()) && Objects.equals(getuId(), that.getuId()) && getStatus() == that.getStatus() && Objects.equals(getMessageTemplate(), that.getMessageTemplate()) && Objects.equals(getDetails(), that.getDetails()) && Objects.equals(getRecipientsCount(), that.getRecipientsCount()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated()) && Objects.equals(getMessageLogs(), that.getMessageLogs());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getTransactionLogId(), getuId(), getStatus(), getMessageTemplate(), getDetails(), getRecipientsCount(), getDateCreated(), getDeleted(), getUserCreated(), getMessageLogs());
+		return Objects.hash(getTransactionLogId(), getuId(), getStatus(), getMessageTemplate(), getDetails(), getRecipientsCount(), getDateCreated(), isDeleted(), getUserCreated(), getMessageLogs());
 	}
 
 	@Override

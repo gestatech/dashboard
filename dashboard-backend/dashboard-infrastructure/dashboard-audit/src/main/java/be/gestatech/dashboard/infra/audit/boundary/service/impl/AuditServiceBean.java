@@ -8,16 +8,16 @@ import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import be.gestatech.dashboard.infra.audit.boundary.service.api.AuditService;
 import be.gestatech.dashboard.infra.audit.control.AuditController;
-import be.gestatech.dashboard.infra.audit.infra.annotation.AuditEntityManager;
-import be.gestatech.dashboard.infra.audit.infra.dto.api.AuditableUser;
-import be.gestatech.dashboard.infra.audit.infra.dto.impl.UserDTO;
 import be.gestatech.dashboard.infra.audit.entity.AuditEvent;
 import be.gestatech.dashboard.infra.audit.entity.AuditInitialValues;
+import be.gestatech.dashboard.infra.audit.infra.annotation.AuditEntityManager;
 import be.gestatech.dashboard.infra.audit.infra.config.AuditConfig;
 import be.gestatech.dashboard.infra.audit.infra.constant.AuditAction;
+import be.gestatech.dashboard.infra.audit.infra.dto.api.AuditableUser;
+import be.gestatech.dashboard.infra.audit.infra.dto.impl.UserDTO;
 import be.gestatech.dashboard.infra.audit.infra.util.AuditUtil;
-import be.gestatech.dashboard.infra.audit.boundary.service.api.AuditService;
 
 /**
  * Created by amurifa on 13/07/2017.

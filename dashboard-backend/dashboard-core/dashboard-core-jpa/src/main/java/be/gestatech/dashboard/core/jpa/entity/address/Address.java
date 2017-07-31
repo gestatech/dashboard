@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.address;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;

@@ -5,9 +5,10 @@
  */
 package be.gestatech.core.api.audit.model;
 
+import java.util.List;
+
 import be.gestatech.core.api.bookmark.Bookmarkable;
 import be.gestatech.core.api.persistence.Auditable;
-import java.util.List;
 
 /**
  *

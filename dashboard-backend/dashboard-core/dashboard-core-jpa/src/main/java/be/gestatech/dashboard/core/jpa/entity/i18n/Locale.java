@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.i18n;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;

@@ -14,8 +14,8 @@ import be.gestatech.core.api.persistence.AuditEntityListener;
 import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.method.Methods;
 import be.gestatech.dashboard.core.jpa.entity.payment.Payments;
-import be.gestatech.dashboard.core.jpa.entity.user.Users;
 import be.gestatech.dashboard.core.jpa.entity.room.Rooms;
+import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
 /**
  * Entity class Describes User's schedule

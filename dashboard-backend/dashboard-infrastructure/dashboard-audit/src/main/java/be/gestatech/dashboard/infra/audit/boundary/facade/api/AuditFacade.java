@@ -2,8 +2,6 @@ package be.gestatech.dashboard.infra.audit.boundary.facade.api;
 
 import java.util.List;
 
-import javax.ejb.Local;
-
 import be.gestatech.dashboard.infra.audit.entity.AuditEvent;
 import be.gestatech.dashboard.infra.audit.entity.AuditInitialValues;
 import be.gestatech.dashboard.infra.audit.infra.constant.AuditAction;

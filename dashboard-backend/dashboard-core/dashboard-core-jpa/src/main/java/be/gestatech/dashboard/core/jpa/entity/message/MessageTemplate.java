@@ -62,10 +62,10 @@ public class MessageTemplate extends AbstractPersistable<Long> {
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Deleted")
+	@Column(name = "DELETED")
 	private boolean deleted;
 
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users userCreated;
 
@@ -120,52 +120,32 @@ public class MessageTemplate extends AbstractPersistable<Long> {
 		return system;
 	}
 
-	public Boolean isSystem() {
-		return system;
-	}
-
 	public void setSystem(Boolean system) {
 		this.system = system;
 	}
 
-	@Override
 	public Date getDateCreated() {
 		return dateCreated;
 	}
 
-	@Override
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	@Override
-	public boolean getDeleted() {
+	public boolean isDeleted() {
 		return deleted;
 	}
 
-	@Override
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 
-	@Override
 	public Users getUserCreated() {
 		return userCreated;
 	}
 
-	@Override
 	public void setUserCreated(Users userCreated) {
 		this.userCreated = userCreated;
-	}
-
-	@Override
-	public Integer getId() {
-		return messageTemplateId;
-	}
-
-	@Override
-	public void setId(Integer id) {
-		this.messageTemplateId = id;
 	}
 
 	@Override
@@ -176,13 +156,16 @@ public class MessageTemplate extends AbstractPersistable<Long> {
 		if (!(o instanceof MessageTemplate)) {
 			return false;
 		}
+		if (!super.equals(o)) {
+			return false;
+		}
 		MessageTemplate that = (MessageTemplate) o;
-		return getDeleted() == that.getDeleted() && Objects.equals(getMessageTemplateId(), that.getMessageTemplateId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getContent(), that.getContent()) && Objects.equals(getDescription(), that.getDescription()) && getType() == that.getType() && Objects.equals(getSystem(), that.getSystem()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated());
+		return isDeleted() == that.isDeleted() && Objects.equals(getMessageTemplateId(), that.getMessageTemplateId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getContent(), that.getContent()) && Objects.equals(getDescription(), that.getDescription()) && getType() == that.getType() && Objects.equals(getSystem(), that.getSystem()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUserCreated(), that.getUserCreated());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getMessageTemplateId(), getName(), getContent(), getDescription(), getType(), getSystem(), getDateCreated(), getDeleted(), getUserCreated());
+		return Objects.hash(super.hashCode(), getMessageTemplateId(), getName(), getContent(), getDescription(), getType(), getSystem(), getDateCreated(), isDeleted(), getUserCreated());
 	}
 
 	@Override

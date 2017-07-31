@@ -1,11 +1,11 @@
 package be.gestatech.core.api.persistence;
 
-import be.gestatech.dashboard.infra.audit.StringUtils;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import be.gestatech.dashboard.infra.audit.StringUtils;
 
 /**
  * Created by amuri on 6/18/2017.

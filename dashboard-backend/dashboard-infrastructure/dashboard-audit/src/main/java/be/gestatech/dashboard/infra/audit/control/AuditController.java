@@ -34,8 +34,8 @@ import be.gestatech.dashboard.infra.audit.infra.annotation.AuditGroupEventsBreak
 import be.gestatech.dashboard.infra.audit.infra.annotation.AuditRelatedEntity;
 import be.gestatech.dashboard.infra.audit.infra.config.AuditConfig;
 import be.gestatech.dashboard.infra.audit.infra.constant.AuditAction;
-import be.gestatech.dashboard.infra.audit.infra.dto.impl.UserDTO;
 import be.gestatech.dashboard.infra.audit.infra.dto.impl.ChangeDTO;
+import be.gestatech.dashboard.infra.audit.infra.dto.impl.UserDTO;
 import be.gestatech.dashboard.infra.audit.infra.util.AuditUtil;
 
 /**

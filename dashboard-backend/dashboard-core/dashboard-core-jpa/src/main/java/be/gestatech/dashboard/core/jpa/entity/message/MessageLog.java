@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.message;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -55,7 +54,7 @@ public class MessageLog extends AbstractPersistable<Long> {
 
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "CREATED_DATE")
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
 

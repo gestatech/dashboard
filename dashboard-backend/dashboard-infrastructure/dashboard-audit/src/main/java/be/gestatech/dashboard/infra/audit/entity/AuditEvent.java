@@ -8,8 +8,8 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
-import be.gestatech.dashboard.infra.audit.infra.constant.AuditAction;
 import be.gestatech.dashboard.infra.audit.infra.config.AuditConfig;
+import be.gestatech.dashboard.infra.audit.infra.constant.AuditAction;
 
 /**
  * Created by amurifa on 12/07/2017.

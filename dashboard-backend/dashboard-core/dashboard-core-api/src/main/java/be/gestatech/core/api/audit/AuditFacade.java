@@ -5,10 +5,11 @@
  */
 package be.gestatech.core.api.audit;
 
-import be.gestatech.core.api.audit.model.AuditEntity;
-import be.gestatech.core.api.audit.model.AuditState;
 import java.io.Serializable;
 import java.util.List;
+
+import be.gestatech.core.api.audit.model.AuditEntity;
+import be.gestatech.core.api.audit.model.AuditState;
 
 /**
  *

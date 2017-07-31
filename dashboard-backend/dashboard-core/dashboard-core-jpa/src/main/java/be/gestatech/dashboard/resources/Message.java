@@ -1,7 +1,5 @@
 package be.gestatech.dashboard.resources;
 
-import static java.util.ResourceBundle.getBundle;
-
 import java.util.Locale;
 
 import javax.faces.application.FacesMessage;

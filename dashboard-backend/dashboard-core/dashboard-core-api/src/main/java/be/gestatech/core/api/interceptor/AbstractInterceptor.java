@@ -5,14 +5,16 @@
  */
 package be.gestatech.core.api.interceptor;
 
-import be.gestatech.dashboard.infra.audit.ClassUtil;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.logging.Logger;
+
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
+
+import be.gestatech.dashboard.infra.audit.ClassUtil;
 
 /**
  *
