@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.user;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -9,10 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.delivery.DeliveryGroup;
 import be.gestatech.dashboard.core.jpa.entity.policy.Policy;
 
@@ -21,72 +19,66 @@ import be.gestatech.dashboard.core.jpa.entity.policy.Policy;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "USER_GROUP")
+@Table(name = UserGroups.TABLE_NAME)
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
-public class UserGroups extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "ID", column = @Column(name = "USER_GROUP_ID"))
+public class UserGroups extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = -318814857920680370L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "UserGroupId")
-	private Integer userGroupId;
+	public static final String TABLE_NAME = "USER_GROUP";
+
+	@Column(name = "USER_GROUP_ID")
+	private Long userGroupId;
+
 	@Basic(optional = false)
 	@NotNull
 	@Size(min = 1, max = 45)
-	@Column(name = "Name")
+	@Column(name = "NAME")
 	private String name;
+
 	@Size(max = 200)
-	@Column(name = "Description")
+	@Column(name = "DESCRIPTION")
 	private String description;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateCreated")
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Deleted")
+	@Column(name = "DELETED")
 	private boolean deleted;
 
-	@OrderColumn(name="user")
-	@ManyToMany(mappedBy="userGroups", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OrderColumn(name="USER")
+	@ManyToMany(mappedBy="USER_GROUPS", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<Users> users;
 
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users userCreated;
 
-	@OrderColumn(name="DeliveryGroup")
-	@ManyToMany(mappedBy="userGroups")
+	@OrderColumn(name="DELIVERY_GROUP")
+	@ManyToMany(mappedBy="USER_GROUPS")
 	private Collection<DeliveryGroup> deliveryGroups;
 
 
-	@OrderColumn(name="Policy")
-	@ManyToMany(mappedBy="userGroups", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OrderColumn(name="POLICY")
+	@ManyToMany(mappedBy="USER_GROUPS", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Collection<Policy> policies;
 
 	public UserGroups() {
 	}
 
-	public UserGroups(Integer userGroupId) {
-		this.userGroupId = userGroupId;
-	}
-
-	public UserGroups(Integer userGroupId, String name, Date dateCreated, boolean deleted) {
-		this.userGroupId = userGroupId;
-		this.name = name;
-		this.dateCreated = dateCreated;
-		this.deleted = deleted;
-	}
-
-	public Integer getUserGroupId() {
+	public Long getUserGroupId() {
 		return userGroupId;
 	}
 
-	public void setUserGroupId(Integer userTypeId) {
-		this.userGroupId = userTypeId;
+	public void setUserGroupId(Long userGroupId) {
+		this.userGroupId = userGroupId;
 	}
 
 	public String getName() {
@@ -105,34 +97,22 @@ public class UserGroups extends BaseEntity<Integer> implements Serializable {
 		this.description = description;
 	}
 
-	@Override
-	public Integer getId() {
-		return getUserGroupId();
-	}
-
-	@Override
-	public void setId(Integer id) {
-		setUserGroupId(id);
-	}
-
-	@Override
 	public Date getDateCreated() {
 		return dateCreated;
 	}
-	@Override
+
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
-	@Override
-	public boolean getDeleted() {
+
+	public boolean isDeleted() {
 		return deleted;
 	}
-	@Override
+
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
 
-	@XmlTransient
 	public Collection<Users> getUsers() {
 		return users;
 	}
@@ -141,21 +121,20 @@ public class UserGroups extends BaseEntity<Integer> implements Serializable {
 		this.users = users;
 	}
 
+	public Users getUserCreated() {
+		return userCreated;
+	}
+
+	public void setUserCreated(Users userCreated) {
+		this.userCreated = userCreated;
+	}
+
 	public Collection<DeliveryGroup> getDeliveryGroups() {
 		return deliveryGroups;
 	}
 
 	public void setDeliveryGroups(Collection<DeliveryGroup> deliveryGroups) {
 		this.deliveryGroups = deliveryGroups;
-	}
-
-	@Override
-	public Users getUserCreated() {
-		return userCreated;
-	}
-	@Override
-	public void setUserCreated(Users userCreated) {
-		this.userCreated = userCreated;
 	}
 
 	public Collection<Policy> getPolicies() {
@@ -174,13 +153,16 @@ public class UserGroups extends BaseEntity<Integer> implements Serializable {
 		if (!(o instanceof UserGroups)) {
 			return false;
 		}
+		if (!super.equals(o)) {
+			return false;
+		}
 		UserGroups that = (UserGroups) o;
-		return getDeleted() == that.getDeleted() && Objects.equals(getUserGroupId(), that.getUserGroupId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUsers(), that.getUsers()) && Objects.equals(getUserCreated(), that.getUserCreated()) && Objects.equals(getDeliveryGroups(), that.getDeliveryGroups()) && Objects.equals(getPolicies(), that.getPolicies());
+		return isDeleted() == that.isDeleted() && Objects.equals(getUserGroupId(), that.getUserGroupId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getDescription(), that.getDescription()) && Objects.equals(getDateCreated(), that.getDateCreated()) && Objects.equals(getUsers(), that.getUsers()) && Objects.equals(getUserCreated(), that.getUserCreated()) && Objects.equals(getDeliveryGroups(), that.getDeliveryGroups()) && Objects.equals(getPolicies(), that.getPolicies());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getUserGroupId(), getName(), getDescription(), getDateCreated(), getDeleted(), getUsers(), getUserCreated(), getDeliveryGroups(), getPolicies());
+		return Objects.hash(super.hashCode(), getUserGroupId(), getName(), getDescription(), getDateCreated(), isDeleted(), getUsers(), getUserCreated(), getDeliveryGroups(), getPolicies());
 	}
 
 	@Override

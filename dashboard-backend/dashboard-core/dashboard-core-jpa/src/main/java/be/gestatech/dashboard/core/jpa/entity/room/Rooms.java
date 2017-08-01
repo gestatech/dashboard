@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.room;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -9,10 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.plan.Plan;
 import be.gestatech.dashboard.core.jpa.entity.schedule.Schedule;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
@@ -22,7 +20,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "ROOM")
+@Table(name = Rooms.TABLE_NAME)
 @XmlRootElement
 @NamedQueries({
 	@NamedQuery(name = "Rooms.findAll", query = "SELECT r FROM Rooms r"),
@@ -33,59 +31,55 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 	@NamedQuery(name = "Rooms.findByDeleted", query = "SELECT r FROM Rooms r WHERE r.deleted = :deleted")
 })
 @EntityListeners(AuditEntityListener.class)
-public class Rooms extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "ID", column = @Column(name = "ROOM_ID"))
+public class Rooms extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = -8052922608988382788L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Basic(optional = false)
-	@Column(name = "RoomId")
-	private Integer roomId;
+	public static final String TABLE_NAME = "ROOM";
+
+	@Column(name = "ROOM_ID")
+	private Long roomId;
+
 	@Basic(optional = false)
 	@NotNull
 	@Size(min = 1, max = 45)
-	@Column(name = "Name")
+	@Column(name = "NAME")
 	private String name;
+
 	@Size(max = 200)
-	@Column(name = "Description")
+	@Column(name = "DESCRIPTION")
 	private String description;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateCreated")
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Deleted")
+	@Column(name = "DELETED")
 	private boolean deleted;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ROOM")
 	private Collection<Plan> planCollection;
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
+
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users userCreated;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ROOM")
 	private Collection<Schedule> scheduleCollection;
 
 	public Rooms() {
 	}
 
-	public Rooms(Integer roomId) {
-		this.roomId = roomId;
-	}
-
-	public Rooms(Integer roomId, String name, Date dateCreated, boolean deleted) {
-		this.roomId = roomId;
-		this.name = name;
-		this.dateCreated = dateCreated;
-		this.deleted = deleted;
-	}
-
-	public Integer getRoomId() {
+	public Long getRoomId() {
 		return roomId;
 	}
 
-	public void setRoomId(Integer roomId) {
+	public void setRoomId(Long roomId) {
 		this.roomId = roomId;
 	}
 
@@ -105,16 +99,22 @@ public class Rooms extends BaseEntity<Integer> implements Serializable {
 		this.description = description;
 	}
 
-	@XmlTransient
-	public Collection<Schedule> getScheduleCollection() {
-		return scheduleCollection;
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
-	public void setScheduleCollection(Collection<Schedule> scheduleCollection) {
-		this.scheduleCollection = scheduleCollection;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
-	@XmlTransient
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public Collection<Plan> getPlanCollection() {
 		return planCollection;
 	}
@@ -123,56 +123,20 @@ public class Rooms extends BaseEntity<Integer> implements Serializable {
 		this.planCollection = planCollection;
 	}
 
-	@Override
-	public Integer getId() {
-		return getRoomId();
-	}
-
-	@Override
-	public void setId(Integer id) {
-		setRoomId(id);
-	}
-
-	@Override
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-	@Override
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-	@Override
-	public boolean getDeleted() {
-		return deleted;
-	}
-	@Override
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	@Override
 	public Users getUserCreated() {
 		return userCreated;
 	}
-	@Override
+
 	public void setUserCreated(Users userCreated) {
 		this.userCreated = userCreated;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((dateCreated == null) ? 0 : dateCreated.hashCode());
-		result = prime * result + (deleted ? 1231 : 1237);
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((roomId == null) ? 0 : roomId.hashCode());
-		result = prime * result
-				+ ((userCreated == null) ? 0 : userCreated.hashCode());
-		return result;
+	public Collection<Schedule> getScheduleCollection() {
+		return scheduleCollection;
+	}
+
+	public void setScheduleCollection(Collection<Schedule> scheduleCollection) {
+		this.scheduleCollection = scheduleCollection;
 	}
 
 	@Override
@@ -183,8 +147,16 @@ public class Rooms extends BaseEntity<Integer> implements Serializable {
 		if (!(o instanceof Rooms)) {
 			return false;
 		}
+		if (!super.equals(o)) {
+			return false;
+		}
 		Rooms rooms = (Rooms) o;
-		return getDeleted() == rooms.getDeleted() && Objects.equals(getRoomId(), rooms.getRoomId()) && Objects.equals(getName(), rooms.getName()) && Objects.equals(getDescription(), rooms.getDescription()) && Objects.equals(getDateCreated(), rooms.getDateCreated()) && Objects.equals(getPlanCollection(), rooms.getPlanCollection()) && Objects.equals(getUserCreated(), rooms.getUserCreated()) && Objects.equals(getScheduleCollection(), rooms.getScheduleCollection());
+		return isDeleted() == rooms.isDeleted() && Objects.equals(getRoomId(), rooms.getRoomId()) && Objects.equals(getName(), rooms.getName()) && Objects.equals(getDescription(), rooms.getDescription()) && Objects.equals(getDateCreated(), rooms.getDateCreated()) && Objects.equals(getPlanCollection(), rooms.getPlanCollection()) && Objects.equals(getUserCreated(), rooms.getUserCreated()) && Objects.equals(getScheduleCollection(), rooms.getScheduleCollection());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), getRoomId(), getName(), getDescription(), getDateCreated(), isDeleted(), getPlanCollection(), getUserCreated(), getScheduleCollection());
 	}
 
 	@Override

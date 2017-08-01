@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.share;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -11,8 +10,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.method.Methods;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
@@ -21,114 +20,80 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "SHARE")
+@Table(name = Share.TABLE_NAME)
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
-public class Share extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "ID", column = @Column(name = "SHARE_ID"))
+public class Share extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = -8834587744671614251L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ShareId")
-	private Integer shareId;
-	@Column(name = "SalaryDoctor")
+	public static final String TABLE_NAME = "SHARE";
+
+	@Column(name = "SHARE_ID")
+	private Long shareId;
+
+	@Column(name = "SALARY_DOCTOR")
 	private Float salaryDoctor;
-	@Column(name = "SalaryAssistant")
+
+	@Column(name = "SALARY_ASSISTANT")
 	private Float salaryAssistant;
+
 	@Max(value=100)  @Min(value=0)
-	@Column(name = "PercentageDoctor")
+	@Column(name = "PERCENTAGE_DOCTOR")
 	private Float percentageDoctor;
+
 	@Max(value=100)  @Min(value=0)
-	@Column(name = "PercentageAssistant")
+	@Column(name = "PERCENTAGE_ASSISTANT")
 	private Float percentageAssistant;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "date")
+	@Column(name = "DATE")
 	@Temporal(TemporalType.DATE)
 	private Date date;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateCreated")
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Deleted")
+	@Column(name = "DELETED")
 	private boolean deleted;
-	@OrderColumn(name="Share")
+
+	@OrderColumn(name="SHARE")
 	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(name = "ShareHasMethods", joinColumns={@JoinColumn(name="Share", referencedColumnName = "ShareId")},
-			inverseJoinColumns={@JoinColumn(name="Method", referencedColumnName="MethodId")})
+	@JoinTable(name = "SHARE_HAS_METHODS", joinColumns={@JoinColumn(name="SHARE", referencedColumnName = "SHARE_ID")},
+			inverseJoinColumns={@JoinColumn(name="METHOD", referencedColumnName="METHOD_ID")})
 	private Collection<Methods> methods;
-	@OrderColumn(name="Share")
+
+	@OrderColumn(name="SHARE")
 	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(name = "ShareHasDoctors", joinColumns={@JoinColumn(name="Share", referencedColumnName = "ShareId")},
-			inverseJoinColumns={@JoinColumn(name="Doctor", referencedColumnName="UserId")})
+	@JoinTable(name = "SHARE_HAS_DOCTORS", joinColumns={@JoinColumn(name="SHARE", referencedColumnName = "SHARE_ID")},
+			inverseJoinColumns={@JoinColumn(name="DOCTOR", referencedColumnName="USER_ID")})
 	private Collection<Users> doctors;
+
 	@OrderColumn(name="Share")
 	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(name = "ShareHasAssistants", joinColumns={@JoinColumn(name="Share", referencedColumnName = "ShareId")},
-			inverseJoinColumns={@JoinColumn(name="Assistant", referencedColumnName="UserId")})
+	@JoinTable(name = "ShareHasAssistants", joinColumns={@JoinColumn(name="SHARE", referencedColumnName = "SHARE_ID")},
+			inverseJoinColumns={@JoinColumn(name="ASSISTANT", referencedColumnName="USER_ID")})
 	private Collection<Users> assistants;
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
+
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users userCreated;
 
 	public Share() {
 	}
 
-	public Share(Integer shareId) {
-		this.shareId = shareId;
-	}
-
-	public Share(Integer shareId, Date date, Date dateCreated, boolean deleted) {
-		this.shareId = shareId;
-		this.date = date;
-		this.dateCreated = dateCreated;
-		this.deleted = deleted;
-	}
-	@Override
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-	@Override
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-	@Override
-	public boolean getDeleted() {
-		return deleted;
-	}
-	@Override
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	@Override
-	public Users getUserCreated() {
-		return userCreated;
-	}
-	@Override
-	public void setUserCreated(Users userCreated) {
-		this.userCreated = userCreated;
-	}
-
-	@Override
-	public Integer getId() {
-		return getShareId();
-	}
-
-	@Override
-	public void setId(Integer id) {
-		setShareId(id);
-	}
-
-	public Integer getShareId() {
+	public Long getShareId() {
 		return shareId;
 	}
 
-	public void setShareId(Integer shareId) {
+	public void setShareId(Long shareId) {
 		this.shareId = shareId;
 	}
 
@@ -152,8 +117,8 @@ public class Share extends BaseEntity<Integer> implements Serializable {
 		return percentageDoctor;
 	}
 
-	public void setPercentageDoctor(Float persentageDoctor) {
-		this.percentageDoctor = persentageDoctor;
+	public void setPercentageDoctor(Float percentageDoctor) {
+		this.percentageDoctor = percentageDoctor;
 	}
 
 	public Float getPercentageAssistant() {
@@ -170,6 +135,22 @@ public class Share extends BaseEntity<Integer> implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public Collection<Methods> getMethods() {
@@ -196,6 +177,14 @@ public class Share extends BaseEntity<Integer> implements Serializable {
 		this.assistants = assistants;
 	}
 
+	public Users getUserCreated() {
+		return userCreated;
+	}
+
+	public void setUserCreated(Users userCreated) {
+		this.userCreated = userCreated;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -204,13 +193,16 @@ public class Share extends BaseEntity<Integer> implements Serializable {
 		if (!(o instanceof Share)) {
 			return false;
 		}
+		if (!super.equals(o)) {
+			return false;
+		}
 		Share share = (Share) o;
-		return getDeleted() == share.getDeleted() && Objects.equals(getShareId(), share.getShareId()) && Objects.equals(getSalaryDoctor(), share.getSalaryDoctor()) && Objects.equals(getSalaryAssistant(), share.getSalaryAssistant()) && Objects.equals(getPercentageDoctor(), share.getPercentageDoctor()) && Objects.equals(getPercentageAssistant(), share.getPercentageAssistant()) && Objects.equals(getDate(), share.getDate()) && Objects.equals(getDateCreated(), share.getDateCreated()) && Objects.equals(getMethods(), share.getMethods()) && Objects.equals(getDoctors(), share.getDoctors()) && Objects.equals(getAssistants(), share.getAssistants()) && Objects.equals(getUserCreated(), share.getUserCreated());
+		return isDeleted() == share.isDeleted() && Objects.equals(getShareId(), share.getShareId()) && Objects.equals(getSalaryDoctor(), share.getSalaryDoctor()) && Objects.equals(getSalaryAssistant(), share.getSalaryAssistant()) && Objects.equals(getPercentageDoctor(), share.getPercentageDoctor()) && Objects.equals(getPercentageAssistant(), share.getPercentageAssistant()) && Objects.equals(getDate(), share.getDate()) && Objects.equals(getDateCreated(), share.getDateCreated()) && Objects.equals(getMethods(), share.getMethods()) && Objects.equals(getDoctors(), share.getDoctors()) && Objects.equals(getAssistants(), share.getAssistants()) && Objects.equals(getUserCreated(), share.getUserCreated());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getShareId(), getSalaryDoctor(), getSalaryAssistant(), getPercentageDoctor(), getPercentageAssistant(), getDate(), getDateCreated(), getDeleted(), getMethods(), getDoctors(), getAssistants(), getUserCreated());
+		return Objects.hash(super.hashCode(), getShareId(), getSalaryDoctor(), getSalaryAssistant(), getPercentageDoctor(), getPercentageAssistant(), getDate(), getDateCreated(), isDeleted(), getMethods(), getDoctors(), getAssistants(), getUserCreated());
 	}
 
 	@Override

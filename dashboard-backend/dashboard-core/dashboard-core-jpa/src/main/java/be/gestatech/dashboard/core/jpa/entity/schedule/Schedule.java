@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.schedule;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -10,8 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.method.Methods;
 import be.gestatech.dashboard.core.jpa.entity.payment.Payments;
 import be.gestatech.dashboard.core.jpa.entity.room.Rooms;
@@ -22,100 +21,89 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "SCHEDULE")
+@Table(name = Schedule.TABLE_NAME)
 @XmlRootElement
 @EntityListeners(AuditEntityListener.class)
-public class Schedule extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "ID", column = @Column(name = "SCHEDULE_ID"))
+public class Schedule extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 5182241502702844158L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ScheduleId")
-	private Integer scheduleId;
+	public static final String TABLE_NAME = "SCHEDULE";
+
+	@Column(name = "SCHEDULE_ID")
+	private Long scheduleId;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateTimeStart")
+	@Column(name = "START_DATE_TIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateTimeStart;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateTimeEnd")
+	@Column(name = "END_DATE_TIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateTimeEnd;
+
 	@Size(max = 200)
-	@Column(name = "Description")
+	@Column(name = "DESCRIPTION")
 	private String description;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateCreated")
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Deleted")
+	@Column(name = "DELETED")
 	private boolean deleted;
-	@JoinColumn(name = "Method", referencedColumnName = "MethodId")
+
+	@JoinColumn(name = "METHOD", referencedColumnName = "METHOD_ID")
 	@ManyToOne(optional = false)
 	private Methods method;
-	@JoinColumn(name = "Room", referencedColumnName = "RoomId")
+
+	@JoinColumn(name = "ROOM", referencedColumnName = "ROOM_ID")
 	@ManyToOne(optional = false)
 	private Rooms room;
-	@JoinColumn(name = "Patient", referencedColumnName = "UserId")
+
+	@JoinColumn(name = "PATIENT", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users patient;
-	@JoinColumn(name = "Assistant", referencedColumnName = "UserId")
+
+	@JoinColumn(name = "ASSISTANT", referencedColumnName = "USER_ID")
 	@ManyToOne
 	private Users assistant;
-	@JoinColumn(name = "Doctor", referencedColumnName = "UserId")
+
+	@JoinColumn(name = "DOCTOR", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users doctor;
-	@JoinColumn(name = "DoctorDirected", referencedColumnName = "UserId")
+
+	@JoinColumn(name = "DOCTOR_DIRECTED", referencedColumnName = "USER_ID")
 	@ManyToOne
 	private Users doctorDirected;
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
+
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users userCreated;
-	@JoinColumn(name = "ParentSchedule", referencedColumnName = "ScheduleId")
+
+	@JoinColumn(name = "PATIENT_SCHEDULE", referencedColumnName = "SCHEDULE_ID")
 	@ManyToOne
 	private Schedule parentSchedule;
 
-	@OneToMany(mappedBy="schedule")
+	@OneToMany(mappedBy="SCHEDULE")
 	private Collection<Payments> payments;
 
 	public Schedule() {
 	}
 
-	public Schedule(Integer scheduleId) {
-		this.scheduleId = scheduleId;
-	}
-
-	public Schedule(Integer scheduleId, Date dateTimeStart, Date dateTimeEnd, Date dateCreated, boolean deleted) {
-		this.scheduleId = scheduleId;
-		this.dateTimeStart = dateTimeStart;
-		this.dateTimeEnd = dateTimeEnd;
-		this.dateCreated = dateCreated;
-		this.deleted = deleted;
-	}
-
-	public Schedule(Schedule schedule, Methods method, Date startTime, Users patient, Rooms room, Users authorizedUser ){
-		this.doctor = schedule.getDoctor();
-		this.patient = patient;
-		this.assistant = schedule.getAssistant();
-		this.doctorDirected = schedule.getDoctorDirected();
-		this.room = room;
-		this.method = method;
-		this.dateTimeStart = startTime;
-		this.dateTimeEnd = new Date(startTime.getTime() + (method.getTimeInMinutes() * 60L * 1000L));
-		this.dateCreated = new Date();
-		this.userCreated = authorizedUser;
-	}
-
-	public Integer getScheduleId() {
+	public Long getScheduleId() {
 		return scheduleId;
 	}
 
-	public void setScheduleId(Integer scheduleId) {
+	public void setScheduleId(Long scheduleId) {
 		this.scheduleId = scheduleId;
 	}
 
@@ -139,16 +127,24 @@ public class Schedule extends BaseEntity<Integer> implements Serializable {
 		return description;
 	}
 
-	public Schedule getParentSchedule() {
-		return parentSchedule;
-	}
-
-	public void setParentSchedule(Schedule parentSchedule) {
-		this.parentSchedule = parentSchedule;
-	}
-
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public Methods getMethod() {
@@ -179,8 +175,8 @@ public class Schedule extends BaseEntity<Integer> implements Serializable {
 		return assistant;
 	}
 
-	public void setAssistant(Users assistent) {
-		this.assistant = assistent;
+	public void setAssistant(Users assistant) {
+		this.assistant = assistant;
 	}
 
 	public Users getDoctor() {
@@ -195,55 +191,32 @@ public class Schedule extends BaseEntity<Integer> implements Serializable {
 		return doctorDirected;
 	}
 
+	public void setDoctorDirected(Users doctorDirected) {
+		this.doctorDirected = doctorDirected;
+	}
+
+	public Users getUserCreated() {
+		return userCreated;
+	}
+
+	public void setUserCreated(Users userCreated) {
+		this.userCreated = userCreated;
+	}
+
+	public Schedule getParentSchedule() {
+		return parentSchedule;
+	}
+
+	public void setParentSchedule(Schedule parentSchedule) {
+		this.parentSchedule = parentSchedule;
+	}
+
 	public Collection<Payments> getPayments() {
 		return payments;
 	}
 
 	public void setPayments(Collection<Payments> payments) {
 		this.payments = payments;
-	}
-
-	public void setDoctorDirected(Users doctorDirected) {
-		this.doctorDirected = doctorDirected;
-	}
-
-	@Override
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	@Override
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	@Override
-	public boolean getDeleted() {
-		return deleted;
-	}
-	@Override
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	@Override
-	public Integer getId() {
-		return getScheduleId();
-	}
-
-	@Override
-	public void setId(Integer id) {
-		setScheduleId(id);
-	}
-
-	@Override
-	public Users getUserCreated() {
-		return userCreated;
-	}
-
-	@Override
-	public void setUserCreated(Users userCreated) {
-		this.userCreated = userCreated;
 	}
 
 	@Override
@@ -254,13 +227,16 @@ public class Schedule extends BaseEntity<Integer> implements Serializable {
 		if (!(o instanceof Schedule)) {
 			return false;
 		}
+		if (!super.equals(o)) {
+			return false;
+		}
 		Schedule schedule = (Schedule) o;
-		return getDeleted() == schedule.getDeleted() && Objects.equals(getScheduleId(), schedule.getScheduleId()) && Objects.equals(getDateTimeStart(), schedule.getDateTimeStart()) && Objects.equals(getDateTimeEnd(), schedule.getDateTimeEnd()) && Objects.equals(getDescription(), schedule.getDescription()) && Objects.equals(getDateCreated(), schedule.getDateCreated()) && Objects.equals(getMethod(), schedule.getMethod()) && Objects.equals(getRoom(), schedule.getRoom()) && Objects.equals(getPatient(), schedule.getPatient()) && Objects.equals(getAssistant(), schedule.getAssistant()) && Objects.equals(getDoctor(), schedule.getDoctor()) && Objects.equals(getDoctorDirected(), schedule.getDoctorDirected()) && Objects.equals(getUserCreated(), schedule.getUserCreated()) && Objects.equals(getParentSchedule(), schedule.getParentSchedule()) && Objects.equals(getPayments(), schedule.getPayments());
+		return isDeleted() == schedule.isDeleted() && Objects.equals(getScheduleId(), schedule.getScheduleId()) && Objects.equals(getDateTimeStart(), schedule.getDateTimeStart()) && Objects.equals(getDateTimeEnd(), schedule.getDateTimeEnd()) && Objects.equals(getDescription(), schedule.getDescription()) && Objects.equals(getDateCreated(), schedule.getDateCreated()) && Objects.equals(getMethod(), schedule.getMethod()) && Objects.equals(getRoom(), schedule.getRoom()) && Objects.equals(getPatient(), schedule.getPatient()) && Objects.equals(getAssistant(), schedule.getAssistant()) && Objects.equals(getDoctor(), schedule.getDoctor()) && Objects.equals(getDoctorDirected(), schedule.getDoctorDirected()) && Objects.equals(getUserCreated(), schedule.getUserCreated()) && Objects.equals(getParentSchedule(), schedule.getParentSchedule()) && Objects.equals(getPayments(), schedule.getPayments());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getScheduleId(), getDateTimeStart(), getDateTimeEnd(), getDescription(), getDateCreated(), getDeleted(), getMethod(), getRoom(), getPatient(), getAssistant(), getDoctor(), getDoctorDirected(), getUserCreated(), getParentSchedule(), getPayments());
+		return Objects.hash(super.hashCode(), getScheduleId(), getDateTimeStart(), getDateTimeEnd(), getDescription(), getDateCreated(), isDeleted(), getMethod(), getRoom(), getPatient(), getAssistant(), getDoctor(), getDoctorDirected(), getUserCreated(), getParentSchedule(), getPayments());
 	}
 
 	@Override

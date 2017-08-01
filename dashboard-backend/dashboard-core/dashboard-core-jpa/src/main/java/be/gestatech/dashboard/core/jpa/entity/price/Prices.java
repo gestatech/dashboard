@@ -1,6 +1,5 @@
 package be.gestatech.dashboard.core.jpa.entity.price;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -8,8 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import be.gestatech.core.api.persistence.AbstractPersistable;
 import be.gestatech.core.api.persistence.AuditEntityListener;
-import be.gestatech.dashboard.core.jpa.entity.base.BaseEntity;
 import be.gestatech.dashboard.core.jpa.entity.method.Methods;
 import be.gestatech.dashboard.core.jpa.entity.user.Users;
 
@@ -18,7 +17,7 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
  * Created by amurifa on 30/06/2017.
  */
 @Entity
-@Table(name = "PRICE")
+@Table(name = Prices.TABLE_NAME)
 @XmlRootElement
 @NamedQueries({
 	@NamedQuery(name = "Prices.findAll", query = "SELECT p FROM Prices p"),
@@ -29,57 +28,51 @@ import be.gestatech.dashboard.core.jpa.entity.user.Users;
 	@NamedQuery(name = "Prices.findByDeleted", query = "SELECT p FROM Prices p WHERE p.deleted = :deleted")
 })
 @EntityListeners(AuditEntityListener.class)
-public class Prices extends BaseEntity<Integer> implements Serializable {
+@AttributeOverride(name = "ID", column = @Column(name = "PRICE_ID"))
+public class Prices extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 5457462759625938435L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Basic(optional = false)
-	@Column(name = "PriceId")
-	private Integer priceId;
+	public static final String TABLE_NAME = "PRICE";
+
+	@Column(name = "PRICE_ID")
+	private Long priceId;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "Total")
+	@Column(name = "TOTAL")
 	private float total;
-	@Column(name = "DateTime")
+
+	@Column(name = "DATE_TIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateTime;
+
 	@Basic(optional = false)
 	@NotNull
-	@Column(name = "DateCreated")
+	@Column(name = "CREATED_ON")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateCreated;
+
 	@Basic(optional = false)
-	@NotNull
-	@Column(name = "Deleted")
+	@Column(name = "DELETED")
 	private boolean deleted;
-	@JoinColumn(name = "Method", referencedColumnName = "MethodId")
+
+	@JoinColumn(name = "METHOD", referencedColumnName = "METHOD_ID")
 	@ManyToOne(optional = false)
 	private Methods method;
-	@JoinColumn(name = "UserCreated", referencedColumnName = "UserId")
+
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "USER_ID")
 	@ManyToOne(optional = false)
 	private Users userCreated;
 
 	public Prices() {
 	}
 
-	public Prices(Integer priceId) {
-		this.priceId = priceId;
-	}
-
-	public Prices(Integer priceId, float total, Date dateCreated, boolean deleted) {
-		this.priceId = priceId;
-		this.total = total;
-		this.dateCreated = dateCreated;
-		this.deleted = deleted;
-	}
-
-	public Integer getPriceId() {
+	public Long getPriceId() {
 		return priceId;
 	}
 
-	public void setPriceId(Integer priceId) {
+	public void setPriceId(Long priceId) {
 		this.priceId = priceId;
 	}
 
@@ -99,6 +92,22 @@ public class Prices extends BaseEntity<Integer> implements Serializable {
 		this.dateTime = dateTime;
 	}
 
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
 	public Methods getMethod() {
 		return method;
 	}
@@ -107,38 +116,10 @@ public class Prices extends BaseEntity<Integer> implements Serializable {
 		this.method = method;
 	}
 
-	@Override
-	public Integer getId() {
-		return getPriceId();
-	}
-
-	@Override
-	public void setId(Integer id) {
-		setPriceId(id);
-	}
-
-	@Override
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-	@Override
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-	@Override
-	public boolean getDeleted() {
-		return deleted;
-	}
-	@Override
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
-	@Override
 	public Users getUserCreated() {
 		return userCreated;
 	}
-	@Override
+
 	public void setUserCreated(Users userCreated) {
 		this.userCreated = userCreated;
 	}
@@ -151,13 +132,16 @@ public class Prices extends BaseEntity<Integer> implements Serializable {
 		if (!(o instanceof Prices)) {
 			return false;
 		}
+		if (!super.equals(o)) {
+			return false;
+		}
 		Prices prices = (Prices) o;
-		return Float.compare(prices.getTotal(), getTotal()) == 0 && getDeleted() == prices.getDeleted() && Objects.equals(getPriceId(), prices.getPriceId()) && Objects.equals(getDateTime(), prices.getDateTime()) && Objects.equals(getDateCreated(), prices.getDateCreated()) && Objects.equals(getMethod(), prices.getMethod()) && Objects.equals(getUserCreated(), prices.getUserCreated());
+		return Float.compare(prices.getTotal(), getTotal()) == 0 && isDeleted() == prices.isDeleted() && Objects.equals(getPriceId(), prices.getPriceId()) && Objects.equals(getDateTime(), prices.getDateTime()) && Objects.equals(getDateCreated(), prices.getDateCreated()) && Objects.equals(getMethod(), prices.getMethod()) && Objects.equals(getUserCreated(), prices.getUserCreated());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getPriceId(), getTotal(), getDateTime(), getDateCreated(), getDeleted(), getMethod(), getUserCreated());
+		return Objects.hash(super.hashCode(), getPriceId(), getTotal(), getDateTime(), getDateCreated(), isDeleted(), getMethod(), getUserCreated());
 	}
 
 	@Override
