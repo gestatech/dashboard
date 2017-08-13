@@ -6,21 +6,20 @@
         <artifactId>dashboard-backend</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-
+    
     <groupId>be.gestatech</groupId>
-    <artifactId>dashboard-web</artifactId>
+    <artifactId>dashboard-business</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>dashboard-web</name>
+    <name>dashboard-business</name>
 
     <modules>
-        <module>dashboard-web-util</module>
-        <module>dashboard-web-rest</module>
-        <module>dashboard-web-jsf</module>
+        <module>dashboard-business-api</module>
+        <module>dashboard-business-impl</module>
     </modules>
-
+    
     <build>
         <finalName>${project.artifactId}</finalName>
     </build>
-
+    
 </project>

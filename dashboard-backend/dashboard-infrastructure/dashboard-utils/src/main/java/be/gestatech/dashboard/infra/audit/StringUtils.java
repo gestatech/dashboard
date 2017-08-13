@@ -34,4 +34,8 @@ public class StringUtils {
         return !isEmpty(cs);
     }
 
+    public static boolean isAnyString(String input) {
+        return input != null && (!input.trim().equals(""));
+    }
+
 }

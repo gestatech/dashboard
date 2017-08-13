@@ -8,33 +8,15 @@
     </parent>
 
     <groupId>be.gestatech</groupId>
-    <artifactId>dashboard-web-jsf</artifactId>
+    <artifactId>dashboard-web-util</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>dashboard-web-jsf</name>
+    <name>dashboard-web-util</name>
 
     <dependencies>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>be.gestatech</groupId>
-            <artifactId>dashboard-ejb-api</artifactId>
-            <scope>provided</scope>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>be.gestatech</groupId>
-            <artifactId>dashboard-web-util</artifactId>
-            <scope>provided</scope>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>be.gestatech</groupId>
-            <artifactId>dashboard-i18n</artifactId>
-            <scope>provided</scope>
-            <type>jar</type>
         </dependency>
     </dependencies>
 
@@ -44,10 +26,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

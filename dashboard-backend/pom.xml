@@ -16,8 +16,8 @@
     <modules>
         <module>dashboard-ear</module>
         <module>dashboard-infrastructure</module>
-        <module>dashboard-core</module>
-        <module>dashboard-ejb</module>
+        <module>dashboard-core-to-remove</module>
+        <module>dashboard-business</module>
         <module>dashboard-web</module>
     </modules>
 
@@ -26,6 +26,7 @@
         <java.version>1.8</java.version>
         <version.java.ee.api>7.0</version.java.ee.api>
         <version.java.ejb>3.2</version.java.ejb>
+        <version.cache-api>1.0.0</version.cache-api>
 
         <!-- Plugins -->
         <main.basedir>${project.basedir}</main.basedir>
@@ -38,11 +39,53 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Java EE Framework -->
             <dependency>
                 <groupId>javax</groupId>
                 <artifactId>javaee-api</artifactId>
                 <version>${version.dependency.javaee}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.cache</groupId>
+                <artifactId>cache-api</artifactId>
+                <version>${version.cache-api}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jsr107.ri</groupId>
+                <artifactId>cache-annotations-ri-cdi</artifactId>
+                <version>${version.cache-api}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jsr107.ri</groupId>
+                <artifactId>cache-ri-impl</artifactId>
+                <version>${version.cache-api}</version>
+            </dependency>
+
+            <!-- Project Dependencies -->
+            <dependency>
+                <groupId>be.gestatech</groupId>
+                <artifactId>dashboard-core</artifactId>
+                <version>${project.version}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>be.gestatech</groupId>
+                <artifactId>dashboard-core</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+            </dependency>
+            <dependency>
+                <groupId>be.gestatech</groupId>
+                <artifactId>dashboard-i18n</artifactId>
+                <version>${project.version}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>be.gestatech</groupId>
+                <artifactId>dashboard-i18n</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
             </dependency>
             <dependency>
                 <groupId>be.gestatech</groupId>
@@ -127,6 +170,19 @@
             <dependency>
                 <groupId>be.gestatech</groupId>
                 <artifactId>dashboard-ejb-impl</artifactId>
+                <version>${project.version}</version>
+                <scope>test</scope>
+                <type>test-jar</type>
+            </dependency>
+            <dependency>
+                <groupId>be.gestatech</groupId>
+                <artifactId>dashboard-web-util</artifactId>
+                <version>${project.version}</version>
+                <type>jar</type>
+            </dependency>
+            <dependency>
+                <groupId>be.gestatech</groupId>
+                <artifactId>dashboard-web-util</artifactId>
                 <version>${project.version}</version>
                 <scope>test</scope>
                 <type>test-jar</type>

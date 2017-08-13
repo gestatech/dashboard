@@ -2,16 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>dashboard-web</artifactId>
         <groupId>be.gestatech</groupId>
+        <artifactId>dashboard-core-to-remove</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <groupId>be.gestatech</groupId>
-    <artifactId>dashboard-web-jsf</artifactId>
+    <artifactId>dashboard-core-jpa</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>dashboard-web-jsf</name>
+    <packaging>jar</packaging>
+    <name>dashboard-core-jpa</name>
 
     <dependencies>
         <dependency>
@@ -20,24 +20,22 @@
         </dependency>
         <dependency>
             <groupId>be.gestatech</groupId>
-            <artifactId>dashboard-ejb-api</artifactId>
-            <scope>provided</scope>
-            <type>jar</type>
+            <artifactId>dashboard-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
         </dependency>
         <dependency>
             <groupId>be.gestatech</groupId>
-            <artifactId>dashboard-web-util</artifactId>
-            <scope>provided</scope>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>be.gestatech</groupId>
-            <artifactId>dashboard-i18n</artifactId>
-            <scope>provided</scope>
-            <type>jar</type>
+            <artifactId>dashboard-utils</artifactId>
         </dependency>
     </dependencies>
-
+    
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
@@ -47,7 +45,7 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
+                <artifactId>maven-ejb-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

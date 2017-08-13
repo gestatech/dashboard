@@ -8,19 +8,17 @@
     </parent>
 
     <groupId>be.gestatech</groupId>
-    <artifactId>dashboard-web</artifactId>
+    <artifactId>dashboard-core-to-remove</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>dashboard-web</name>
+    <name>dashboard-core</name>
 
     <modules>
-        <module>dashboard-web-util</module>
-        <module>dashboard-web-rest</module>
-        <module>dashboard-web-jsf</module>
+        <module>dashboard-core-api</module>
+        <module>dashboard-core-jpa</module>
     </modules>
 
     <build>
         <finalName>${project.artifactId}</finalName>
     </build>
-
 </project>
