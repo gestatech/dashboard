@@ -21,20 +21,14 @@
         <dependency>
             <groupId>be.gestatech</groupId>
             <artifactId>dashboard-ejb-api</artifactId>
-            <scope>provided</scope>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>be.gestatech</groupId>
-            <artifactId>dashboard-web-util</artifactId>
-            <scope>provided</scope>
-            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>be.gestatech</groupId>
             <artifactId>dashboard-i18n</artifactId>
-            <scope>provided</scope>
-            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
         </dependency>
     </dependencies>
 

@@ -14,7 +14,6 @@
     <name>dashboard-web</name>
 
     <modules>
-        <module>dashboard-web-util</module>
         <module>dashboard-web-rest</module>
         <module>dashboard-web-jsf</module>
     </modules>
