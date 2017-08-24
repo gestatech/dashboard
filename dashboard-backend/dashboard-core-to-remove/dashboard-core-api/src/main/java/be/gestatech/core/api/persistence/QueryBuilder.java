@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import be.gestatech.dashboard.infra.audit.StringUtils;
+import be.gestatech.dashboard.infra.audit.string.StringUtil;
 
 /**
  * Created by amuri on 6/18/2017.
@@ -104,7 +104,7 @@ public class QueryBuilder {
 
     private boolean isEmptyValue(Object value) {
         if (value instanceof String) {
-            return StringUtils.isEmpty((String) value);
+            return StringUtil.isEmpty((String) value);
         }
         return value == null;
     }

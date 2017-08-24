@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 
-import be.gestatech.dashboard.infra.audit.ClassUtil;
+import be.gestatech.dashboard.infra.audit.lang.ClassUtil;
 
 /**
  *

@@ -52,41 +52,42 @@ public class ResourceBundleDatabaseControl extends ResourceBundle.Control {
 		protected Object[][] getContents() {
 
 			Context ctx;
-			LocaleFacadeLocal localeFacade = null;
-			MessageBundleFacadeLocal messageBundleFacade = null;
-			try {
-				ctx = new InitialContext();
-				localeFacade = (LocaleFacadeLocal) ctx.lookup("java:global/DoctorVeraCloud-ear-0.0.1-SNAPSHOT/DoctorVeraCloud-ejb-0.0.1-SNAPSHOT/LocaleFacade");
-				messageBundleFacade = (MessageBundleFacadeLocal) ctx.lookup("java:global/DoctorVeraCloud-ear-0.0.1-SNAPSHOT/DoctorVeraCloud-ejb-0.0.1-SNAPSHOT/MessageBundleFacade");
-			} catch (NamingException e) {
-				e.printStackTrace();
-			}
-
-			if (locale == null || locale.getLanguage().isEmpty()) {
-				locale = new Locale("ru", "Ru"); //Default locale
-			}
-
-			Map<String, String> resources;
-			if (bundleName == null) {
-				bundleName = getBaseBundleName();
-			}
-			if (bundleName.equals("message")) {
-				resources = messageBundleFacade.findAllMessages(localeFacade.findLocale(locale));
-			} else if (bundleName.equals("mapping")) {
-				resources = messageBundleFacade.findAllMappingEntries();
-			} else if (bundleName.equals("config")) {
-				resources = messageBundleFacade.findAllConfigEntries();
-			} else {
-				return null;
-			}
-
-			Object[][] messages = new Object[resources.size()][2];
-			int i = 0;
-			for (String key : resources.keySet()) {
-				messages[i] = new Object[] { key, resources.get(key) };
-				i++;
-			}
-			return messages;
+//			LocaleFacadeLocal localeFacade = null;
+//			MessageBundleFacadeLocal messageBundleFacade = null;
+//			try {
+//				ctx = new InitialContext();
+//				localeFacade = (LocaleFacadeLocal) ctx.lookup("java:global/DoctorVeraCloud-ear-0.0.1-SNAPSHOT/DoctorVeraCloud-ejb-0.0.1-SNAPSHOT/LocaleFacade");
+//				messageBundleFacade = (MessageBundleFacadeLocal) ctx.lookup("java:global/DoctorVeraCloud-ear-0.0.1-SNAPSHOT/DoctorVeraCloud-ejb-0.0.1-SNAPSHOT/MessageBundleFacade");
+//			} catch (NamingException e) {
+//				e.printStackTrace();
+//			}
+//
+//			if (locale == null || locale.getLanguage().isEmpty()) {
+//				locale = new Locale("ru", "Ru"); //Default locale
+//			}
+//
+//			Map<String, String> resources;
+//			if (bundleName == null) {
+//				bundleName = getBaseBundleName();
+//			}
+//			if (bundleName.equals("message")) {
+//				resources = messageBundleFacade.findAllMessages(localeFacade.findLocale(locale));
+//			} else if (bundleName.equals("mapping")) {
+//				resources = messageBundleFacade.findAllMappingEntries();
+//			} else if (bundleName.equals("config")) {
+//				resources = messageBundleFacade.findAllConfigEntries();
+//			} else {
+//				return null;
+//			}
+//
+//			Object[][] messages = new Object[resources.size()][2];
+//			int i = 0;
+//			for (String key : resources.keySet()) {
+//				messages[i] = new Object[] { key, resources.get(key) };
+//				i++;
+//			}
+			//return messages;
+			return null;
 		}
 	}
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package be.gestatech.dashboard.infra.audit;
+package be.gestatech.dashboard.infra.audit.string;
 
 import java.util.Objects;
 
@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author gestatech
  */
-public class StringUtils {
+public class StringUtil {
 
     public static final String EMPTY = "";
     public static final String SPACE = " ";
@@ -22,7 +22,7 @@ public class StringUtils {
     public static final String LF = "\n";
     public static final String CR = "\r";
 
-    private StringUtils() {
+    private StringUtil() {
         throw new RuntimeException();
     }
 

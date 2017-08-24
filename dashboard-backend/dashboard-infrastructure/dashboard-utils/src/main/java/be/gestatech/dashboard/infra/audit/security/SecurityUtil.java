@@ -1,4 +1,4 @@
-package be.gestatech.dashboard.infra.audit;
+package be.gestatech.dashboard.infra.audit.security;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
@@ -6,9 +6,9 @@ import java.util.Random;
 /**
  * Created by amurifa on 30/06/2017.
  */
-public class Utils {
+public class SecurityUtil {
 
-	private Utils() {
+	private SecurityUtil() {
 		throw new RuntimeException();
 	}
 

@@ -1,4 +1,4 @@
-package be.gestatech.dashboard.infra.audit;
+package be.gestatech.dashboard.infra.audit.date;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -9,9 +9,9 @@ import org.joda.time.DateTime;
 /**
  * Created by amurifa on 30/06/2017.
  */
-public class DateUtils {
+public class DateUtil {
 
-	public DateUtils() {
+	public DateUtil() {
 		throw new RuntimeException();
 	}
 

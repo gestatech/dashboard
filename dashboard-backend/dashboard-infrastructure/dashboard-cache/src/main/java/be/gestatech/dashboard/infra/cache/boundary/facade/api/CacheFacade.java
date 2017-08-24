@@ -5,5 +5,14 @@ import javax.cache.CacheManager;
 import java.io.Serializable;
 
 public interface CacheFacade extends Serializable {
-    CacheManager getCacheManager(String cacheName);
+    String BEAN_NAME = "cacheFacade";
+
+    // cache names
+    String I18N_CACHE = "i18n";
+
+    CacheManager createCacheManager(String cacheName);
+
+    Cache<String, Object> createUserCache(CacheManager cacheManager);
+
+    Cache getCache(String cacheName);
 }
